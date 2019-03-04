@@ -4,4 +4,11 @@ div{
   h1{
     color: white;
   }
+
+  .img{
+    height: 50vh;
+    background: url('../assets/Tidus.png');
+    background-repeat: none;
+    background-size: contain;
+  }
 }

@@ -6,6 +6,7 @@ class App extends Component {
     return (
       <div>
         <h1>My React Apple! haahha</h1>
+        <div className='img'></div>
       </div>
     );
   };
