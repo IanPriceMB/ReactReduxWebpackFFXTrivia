@@ -14,6 +14,7 @@
   "author": "Ian Price",
   "license": "ISC",
   "dependencies": {
+    "pubsub-js": "^1.7.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3"
   },

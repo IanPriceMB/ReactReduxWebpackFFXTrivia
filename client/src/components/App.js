@@ -3,15 +3,25 @@ import './App.scss';
 import {CharacterSelectScreen} from '../screens/characterSelectScreen/CharacterSelectScreen';
 import {CutsceneScreen} from '../screens/cutsceneScreen/CutsceneScreen';
 import {GameScreen} from '../screens/gameScreen/GameScreen';
-import {MainMenuScreen} from '../screens/mainMenuScreen/MainMenuScreen';
+import MainMenuScreen from '../screens/mainMenuScreen/MainMenuScreen';
 import SplashScreen from '../screens/splashScreen/SplashScreen';
-
+import pubsub from 'pubsub-js';
 
 class App extends Component {
   state = {screen: 'landing'};
 
   changeScreen = (value) =>{
     this.setState({screen: value})
+  }
+
+  componentWillMount(){
+    this.pubsub_event = pubsub.subscribe('new game', this.newGame)
+  }
+
+  newGame = (topic, data) => {
+    this.changeScreen('CutsceneScreen');
+    //redux state for new game
+    console.log(topic, data)
   }
 
   render(){
