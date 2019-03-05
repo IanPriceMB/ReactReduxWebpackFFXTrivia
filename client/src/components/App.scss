@@ -1,14 +1,14 @@
-div{
-  background-color: red;
+html{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+body, html, #app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  position: relative;
+}
 
-  h1{
-    color: white;
-  }
-
-  .img{
-    height: 50vh;
-    background: url('../assets/Tidus.png');
-    background-repeat: none;
-    background-size: contain;
-  }
+#app {
+  position: relative;
 }

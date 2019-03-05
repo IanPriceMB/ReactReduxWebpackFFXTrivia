@@ -1,12 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import './App.scss';
-// import {CharacterSelectMenu} from './characterSelect/CharacterSelectMenu';
-// import {CharacterPanel} from './characterSelect/CharacterPanel/CharacterPanel';
-// import {MainMenu} from './mainMenu/MainMenu';
-// import {OptionsMenu} from './optionsMenu/OptionsMenu';
-// import {PartyOverlay} from './partyOverlay/PartyOverlay';
-// import {QuestionMenu} from './questionMenu/QuestionMenu'
-// import {Timer} from './timer/Timer';
 import {CharacterSelectScreen} from '../screens/characterSelectScreen/CharacterSelectScreen';
 import {CutsceneScreen} from '../screens/cutsceneScreen/CutsceneScreen';
 import {GameScreen} from '../screens/gameScreen/GameScreen';
@@ -15,12 +8,17 @@ import SplashScreen from '../screens/splashScreen/SplashScreen';
 
 
 class App extends Component {
-  state = {screen: ''};
+  state = {screen: 'landing'};
+
+  changeScreen = (value) =>{
+    this.setState({screen: value})
+  }
+
   render(){
     return (
-      <div>
+      <Fragment>
         { this.state.screen == 'landing'?(
-          <><SplashScreen></SplashScreen></>   
+          <><SplashScreen click={this.changeScreen}></SplashScreen></>   
         ):(null)} 
         {this.state.screen == 'MainMenuScreen'?(
           <><MainMenuScreen></MainMenuScreen></>
@@ -34,7 +32,7 @@ class App extends Component {
         {this.state.screen == 'CharacterSelectScreen'?(
           <><CharacterSelectScreen></CharacterSelectScreen></>
         ):(null)}
-      </div>
+      </Fragment>
     );
   };
 };
