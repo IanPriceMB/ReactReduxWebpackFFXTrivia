@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import store from '../../store';
+import levelData from '../../assets/data/levelData'
 
 class CutsceneScreen extends Component {
   constructor (props){
@@ -11,15 +12,17 @@ class CutsceneScreen extends Component {
     }
   }
 
-
-  // Before mounting set state to the redux state for movie
+  // Get the level and cutscene to play and make a URL
   componentWillMount(){
     const reduxState = store.getState();
-    this.setState({
-      cutscene: reduxState.movie.movie
-    });
+    const level = reduxState.level.currentLevel;
+    const scene = reduxState.scene.sceneName;
+    console.log(level);
+    console.log(scene);
+    this.setState({cutscene: `${levelData[level].cutscenes[scene]}`})
+    console.log(levelData[level].cutscenes[scene]);
   }
-  
+
   // Load the movie file 
   async componentDidMount(){
     if(this.state.lazy === null) {
@@ -27,13 +30,15 @@ class CutsceneScreen extends Component {
         const movieFile = await import(`../../assets/movies/${this.state.cutscene}.mp4`);
         
         this.setState({lazy: <video src={movieFile.default} autoPlay id='video'></video>})
+
+        document.getElementById('video').addEventListener('ended', this.charScreen, false)
       } catch(err) {
         this.setState({lazy: <div>{`Failed to load component: ${err}`}</div>})
       }
     }
   }
 
-  skip = () => {
+  charScreen = () => {
     this.props.changeScreen('CharacterSelectScreen');
   }
 
@@ -41,7 +46,7 @@ class CutsceneScreen extends Component {
     return (
       <Fragment>
         {this.state.lazy || <div>waiting...</div>}
-        <button onClick={this.skip}>Skip</button>
+        <button onClick={this.charScreen}>Skip</button>
       </Fragment>
     )
   }

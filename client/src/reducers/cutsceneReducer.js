@@ -1,7 +1,7 @@
 import { SET_CUTSCENE } from '../actions/types';
 
 const initialState = {
-  movie: ''
+  sceneName: ''
 }
 
 export default function(state = initialState, action) {
@@ -9,7 +9,7 @@ export default function(state = initialState, action) {
     case SET_CUTSCENE:
       return {
         ...state, 
-        movie: action.payload
+        sceneName: action.payload
       };
     default: return state;
   }

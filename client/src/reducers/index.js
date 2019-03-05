@@ -5,6 +5,6 @@ import charactersReducer from './characterReducer';
 
 export default combineReducers({
   level: levelReducer,
-  movie: cutsceneReducer,
+  scene: cutsceneReducer,
   characters: charactersReducer
 });

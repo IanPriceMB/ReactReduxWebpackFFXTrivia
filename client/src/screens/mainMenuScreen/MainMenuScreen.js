@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Pubsub from 'pubsub-js';
 import './MainMenuScreen.scss';
 import { connect } from 'react-redux';
 import { setLevel } from '../../actions/levelActions'
@@ -9,9 +8,9 @@ import { setCutscene } from '../../actions/cutsceneActions'
 class MainMenuScreen extends Component {
   
   newGame = () => {
-    Pubsub.publish('new game', null);
-    this.props.setLevel('Zanarkand');
-    this.props.setCutscene('openingBlitzballCutscene');
+    this.props.setLevel('zanarkand_one');
+    this.props.setCutscene('scene_one')
+    this.props.changeScreen('CutsceneScreen');
   }
 
   render() {
@@ -32,11 +31,12 @@ MainMenuScreen.propTypes = {
   level: PropTypes.string,
   setCutscene: PropTypes.func.isRequired,
   cutscene: PropTypes.string,
+  changeScreen: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  level: state.level.level,
-  cutscene: state.movie.filename
+  level: state.level.currentLevel,
+  cutscene: state.scene.sceneName
 })
 
 export default connect(mapStateToProps, { setLevel, setCutscene })(MainMenuScreen);

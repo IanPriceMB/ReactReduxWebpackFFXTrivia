@@ -1,8 +1,8 @@
 import { SET_CUTSCENE } from '../actions/types';
 
-export const setCutscene = (filename) => {
+export const setCutscene = (sceneName) => {
   return ({
     type: SET_CUTSCENE, 
-    payload: filename
+    payload: sceneName
   })
 }

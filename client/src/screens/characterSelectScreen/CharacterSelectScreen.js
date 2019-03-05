@@ -7,7 +7,6 @@ class CharacterSelectScreen extends Component{
 
   componentWillMount(){
     const storeSnap = store.getState();
-    console.log(storeSnap);
     this.props.setCurrentCharacters(['Tidus', 'Auron'])
     this.props.setAvailableCharacters(['Yuna', 'Lulu'])
   }
