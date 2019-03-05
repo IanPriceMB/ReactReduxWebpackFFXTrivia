@@ -3,32 +3,22 @@ import PropTypes from 'prop-types';
 import Pubsub from 'pubsub-js';
 import './MainMenuScreen.scss';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions/postActions'
+import { setLevel } from '../../actions/levelActions'
 
 class MainMenuScreen extends Component {
-
-  componentWillMount(){
-    this.props.fetchPosts();
-  }
   
   newGame = () => {
-    Pubsub.publish('new game', `it's a new game!`);
+    Pubsub.publish('new game', null);
+    this.props.setLevel('Zanarkand');
   }
 
   render() {
-    const postItems = this.props.posts.map(post => (
-      <div key={post.id}>
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
-      </div>
-    ))
     return (
       <Fragment>
         <div className='container'>
-          {/* <button onClick={this.newGame}><h2>New Game</h2></button>
+          <button onClick={this.newGame}><h2>New Game</h2></button>
           <button disabled={true}><h2>Log In</h2></button>
-          <button disabled={true}><h2>Sign Up</h2></button> */}
-          <div>{postItems}</div>
+          <button disabled={true}><h2>Sign Up</h2></button>
         </div>
     </Fragment>
     )
@@ -36,12 +26,12 @@ class MainMenuScreen extends Component {
 }
 
 MainMenuScreen.propTypes = {
-  fetchPosts: PropTypes.func.isRequired,
-  posts: PropTypes.array.isRequired
+  setLevel: PropTypes.func.isRequired,
+  level: PropTypes.string
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts.items
+  level: state.level.level
 })
 
-export default connect(mapStateToProps, { fetchPosts })(MainMenuScreen);
+export default connect(mapStateToProps, { setLevel })(MainMenuScreen);

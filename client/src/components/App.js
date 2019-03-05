@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   componentWillMount(){
-    this.pubsub_event = Pubsub.subscribe('new game', this.newGame)
+    this.pubsub_event = Pubsub.subscribe('new game', this.newGame);
   }
 
   componentWillUnmount(){
@@ -26,8 +26,6 @@ class App extends Component {
 
   newGame = (topic, data) => {
     this.changeScreen('CutsceneScreen');
-    //redux state for new game
-    console.log(topic, data)
   }
 
   render(){
