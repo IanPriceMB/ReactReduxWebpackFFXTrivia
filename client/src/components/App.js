@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import './App.scss';
-import {CharacterSelectScreen} from '../screens/characterSelectScreen/CharacterSelectScreen';
+import CharacterSelectScreen from '../screens/characterSelectScreen/CharacterSelectScreen';
 import CutsceneScreen from '../screens/cutsceneScreen/CutsceneScreen';
 import {GameScreen} from '../screens/gameScreen/GameScreen';
 import MainMenuScreen from '../screens/mainMenuScreen/MainMenuScreen';
