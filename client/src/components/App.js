@@ -5,7 +5,9 @@ import {CutsceneScreen} from '../screens/cutsceneScreen/CutsceneScreen';
 import {GameScreen} from '../screens/gameScreen/GameScreen';
 import MainMenuScreen from '../screens/mainMenuScreen/MainMenuScreen';
 import SplashScreen from '../screens/splashScreen/SplashScreen';
-import pubsub from 'pubsub-js';
+import Pubsub from 'pubsub-js';
+import { Provider } from 'react-redux';
+import store from '../store';
 
 class App extends Component {
   state = {screen: 'landing'};
@@ -15,11 +17,11 @@ class App extends Component {
   }
 
   componentWillMount(){
-    this.pubsub_event = pubsub.subscribe('new game', this.newGame)
+    this.pubsub_event = Pubsub.subscribe('new game', this.newGame)
   }
 
   componentWillUnmount(){
-    pubSub.unsubscribe(this.pubsub_event);
+    PubSub.unsubscribe(this.pubsub_event);
   }
 
   newGame = (topic, data) => {
@@ -30,23 +32,25 @@ class App extends Component {
 
   render(){
     return (
-      <Fragment>
-        { this.state.screen == 'landing'?(
-          <><SplashScreen click={this.changeScreen}></SplashScreen></>   
-        ):(null)} 
-        {this.state.screen == 'MainMenuScreen'?(
-          <><MainMenuScreen></MainMenuScreen></>
-        ):(null)} 
-        {this.state.screen == 'GameScreen'?(
-          <><GameScreen></GameScreen></>
-        ):(null)} 
-        {this.state.screen == 'CutsceneScreen'?(
-          <><CutsceneScreen></CutsceneScreen></>
-        ):(null)} 
-        {this.state.screen == 'CharacterSelectScreen'?(
-          <><CharacterSelectScreen></CharacterSelectScreen></>
-        ):(null)}
-      </Fragment>
+      <Provider store={store}>
+        <Fragment>
+          { this.state.screen == 'landing'?(
+            <><SplashScreen click={this.changeScreen}></SplashScreen></>   
+          ):(null)} 
+          {this.state.screen == 'MainMenuScreen'?(
+            <><MainMenuScreen></MainMenuScreen></>
+          ):(null)} 
+          {this.state.screen == 'GameScreen'?(
+            <><GameScreen></GameScreen></>
+          ):(null)} 
+          {this.state.screen == 'CutsceneScreen'?(
+            <><CutsceneScreen></CutsceneScreen></>
+          ):(null)} 
+          {this.state.screen == 'CharacterSelectScreen'?(
+            <><CharacterSelectScreen></CharacterSelectScreen></>
+          ):(null)}
+        </Fragment>
+      </Provider>
     );
   };
 };
