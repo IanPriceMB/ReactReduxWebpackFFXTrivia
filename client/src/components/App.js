@@ -33,7 +33,7 @@ class App extends Component {
       <Provider store={store}>
         <Fragment>
           { this.state.screen == 'landing'?(
-            <><SplashScreen click={this.changeScreen}></SplashScreen></>   
+            <><SplashScreen changeScreen={this.changeScreen}></SplashScreen></>   
           ):(null)} 
           {this.state.screen == 'MainMenuScreen'?(
             <><MainMenuScreen></MainMenuScreen></>
@@ -42,7 +42,7 @@ class App extends Component {
             <><GameScreen></GameScreen></>
           ):(null)} 
           {this.state.screen == 'CutsceneScreen'?(
-            <><CutsceneScreen></CutsceneScreen></>
+            <><CutsceneScreen  changeScreen={this.changeScreen}></CutsceneScreen></>
           ):(null)} 
           {this.state.screen == 'CharacterSelectScreen'?(
             <><CharacterSelectScreen></CharacterSelectScreen></>

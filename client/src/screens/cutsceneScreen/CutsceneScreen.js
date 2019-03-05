@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import store from '../../store';
-import movie from '../../assets/movies/openingBlitzballCutscene.mp4'
 
 class CutsceneScreen extends Component {
+  constructor (props){
+    super(props)
 
-  state = {
-    cutscene: '',
-    lazy: null
+    this.state = {
+      cutscene: '',
+      lazy: null
+    }
   }
+
 
   // Before mounting set state to the redux state for movie
   componentWillMount(){
@@ -22,22 +25,24 @@ class CutsceneScreen extends Component {
     if(this.state.lazy === null) {
       try {
         const movieFile = await import(`../../assets/movies/${this.state.cutscene}.mp4`);
-        console.log(movieFile);
-        console.log(movie);
         
-        this.setState({lazy: <video src={movieFile.default} autoPlay></video>})
+        this.setState({lazy: <video src={movieFile.default} autoPlay id='video'></video>})
       } catch(err) {
         this.setState({lazy: <div>{`Failed to load component: ${err}`}</div>})
       }
     }
   }
 
+  skip = () => {
+    this.props.changeScreen('CharacterSelectScreen');
+  }
+
   render(){
-    const url = '../../assets/movies/openingBlitzballCutscene.mp4'
     return (
-      <div>
+      <Fragment>
         {this.state.lazy || <div>waiting...</div>}
-      </div>
+        <button onClick={this.skip}>Skip</button>
+      </Fragment>
     )
   }
 }
