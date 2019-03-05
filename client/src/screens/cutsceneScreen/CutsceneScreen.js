@@ -8,6 +8,7 @@ class CutsceneScreen extends Component {
 
     this.state = {
       cutscene: '',
+      scene: '',
       lazy: null
     }
   }
@@ -17,10 +18,8 @@ class CutsceneScreen extends Component {
     const reduxState = store.getState();
     const level = reduxState.level.currentLevel;
     const scene = reduxState.scene.sceneName;
-    console.log(level);
-    console.log(scene);
-    this.setState({cutscene: `${levelData[level].cutscenes[scene]}`})
-    console.log(levelData[level].cutscenes[scene]);
+    this.setState({cutscene: `${levelData[level].cutscenes[scene]}`, scene: scene})
+
   }
 
   // Load the movie file 
@@ -31,22 +30,23 @@ class CutsceneScreen extends Component {
         
         this.setState({lazy: <video src={movieFile.default} autoPlay id='video'></video>})
 
-        document.getElementById('video').addEventListener('ended', this.charScreen, false)
+        document.getElementById('video').addEventListener('ended', this.endScene, false)
       } catch(err) {
         this.setState({lazy: <div>{`Failed to load component: ${err}`}</div>})
       }
     }
   }
 
-  charScreen = () => {
-    this.props.changeScreen('CharacterSelectScreen');
+  endScene = () =>{
+    if(this.state.scene )
+    this.props.changeScreen('CharacterSelectScreen')
   }
 
   render(){
     return (
       <Fragment>
-        {this.state.lazy || <div>waiting...</div>}
-        <button onClick={this.charScreen}>Skip</button>
+        {this.state.lazy || <div>loading...</div>}
+        <button onClick={this.endScene}>Skip</button>
       </Fragment>
     )
   }

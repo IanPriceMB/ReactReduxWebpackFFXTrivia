@@ -6,6 +6,10 @@ import { setLevel } from '../../actions/levelActions'
 import { setCutscene } from '../../actions/cutsceneActions'
 
 class MainMenuScreen extends Component {
+  constructor (props){
+    super(props)
+
+  }
   
   newGame = () => {
     this.props.setLevel('zanarkand_one');
