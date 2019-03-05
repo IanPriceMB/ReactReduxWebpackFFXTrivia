@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import './App.scss';
-import {CharacterSelectMenu} from './characterSelect/CharacterSelectMenu';
-import {CharacterPanel} from './characterSelect/CharacterPanel/CharacterPanel';
-import {MainMenu} from './mainMenu/MainMenu';
-import {OptionsMenu} from './optionsMenu/OptionsMenu';
-import {PartyOverlay} from './partyOverlay/PartyOverlay';
-import {QuestionMenu} from './questionMenu/QuestionMenu'
-import {Timer} from './timer/Timer';
+// import {CharacterSelectMenu} from './characterSelect/CharacterSelectMenu';
+// import {CharacterPanel} from './characterSelect/CharacterPanel/CharacterPanel';
+// import {MainMenu} from './mainMenu/MainMenu';
+// import {OptionsMenu} from './optionsMenu/OptionsMenu';
+// import {PartyOverlay} from './partyOverlay/PartyOverlay';
+// import {QuestionMenu} from './questionMenu/QuestionMenu'
+// import {Timer} from './timer/Timer';
 import {CharacterSelectScreen} from '../screens/characterSelectScreen/CharacterSelectScreen';
 import {CutsceneScreen} from '../screens/cutsceneScreen/CutsceneScreen';
 import {GameScreen} from '../screens/gameScreen/GameScreen';
@@ -15,27 +15,25 @@ import SplashScreen from '../screens/splashScreen/SplashScreen';
 
 
 class App extends Component {
-  state = {screen: 'landing'};
+  state = {screen: ''};
   render(){
     return (
       <div>
-        { this.state.screen == 'landing' ? (
-          <div>
-          <><CharacterSelectMenu></CharacterSelectMenu></>
-          <><CharacterPanel></CharacterPanel></>
-          <><MainMenu></MainMenu></>
-          <><OptionsMenu></OptionsMenu></>
-          <><PartyOverlay></PartyOverlay></>
-          <><QuestionMenu></QuestionMenu></>
-          <><Timer></Timer></>
-          <><CharacterSelectScreen></CharacterSelectScreen></>
-          <><CutsceneScreen></CutsceneScreen></>
-          <><GameScreen></GameScreen></>
+        { this.state.screen == 'landing'?(
+          <><SplashScreen></SplashScreen></>   
+        ):(null)} 
+        {this.state.screen == 'MainMenuScreen'?(
           <><MainMenuScreen></MainMenuScreen></>
-          <><SplashScreen></SplashScreen></>
-          </div>
-        ):
-        (null)}
+        ):(null)} 
+        {this.state.screen == 'GameScreen'?(
+          <><GameScreen></GameScreen></>
+        ):(null)} 
+        {this.state.screen == 'CutsceneScreen'?(
+          <><CutsceneScreen></CutsceneScreen></>
+        ):(null)} 
+        {this.state.screen == 'CharacterSelectScreen'?(
+          <><CharacterSelectScreen></CharacterSelectScreen></>
+        ):(null)}
       </div>
     );
   };
