@@ -11,7 +11,7 @@ class MainMenuScreen extends Component {
   newGame = () => {
     Pubsub.publish('new game', null);
     this.props.setLevel('Zanarkand');
-    this.props.setCutscene('openingBlitzballCutscene')
+    this.props.setCutscene('openingBlitzballCutscene');
   }
 
   render() {
