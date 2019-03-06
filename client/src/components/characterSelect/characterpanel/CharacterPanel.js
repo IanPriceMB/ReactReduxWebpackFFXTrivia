@@ -11,7 +11,7 @@ import Kimahri from '../../../assets/characters/Kimahri.png';
 
 const CharacterPanel = props => {
   return (
-    <div className='characterPanel' >
+    <div className='characterPanel' id={props.character} data-chosen={false} onClick={() => props.updateChosen(props.character)}>
       <div className='characterPanel__media'>
         <h1 className='characterPanel__media__name'>{characterData[props.character].name}</h1>
         <img className='characterPanel__media__picture'
