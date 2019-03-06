@@ -1,7 +1,7 @@
 import { SET_CURRENT_CHARACTERS, SET_AVAILABLE_CHARACTERS } from '../actions/types';
 
 const initialState = {
-  availableCharacters: ['Tidus'],
+  availableCharacters: [],
   currentCharacters: []
 }
 
@@ -10,12 +10,12 @@ export default function(state = initialState, action) {
     case SET_CURRENT_CHARACTERS:
       return {
         ...state, 
-        currentCharacters:[...state.currentCharacters, ...action.payload]
+        currentCharacters:action.payload
       };
     case SET_AVAILABLE_CHARACTERS:
       return {
         ...state,
-        availableCharacters:[...state.availableCharacters, ...action.payload]
+        availableCharacters:action.payload
       }
     default: return state;
   }

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import store from '../../store';
 import levelData from '../../assets/data/levelData'
 
@@ -19,7 +20,6 @@ class CutsceneScreen extends Component {
     const level = reduxState.level.currentLevel;
     const scene = reduxState.scene.sceneName;
     this.setState({cutscene: `${levelData[level].cutscenes[scene]}`, scene: scene})
-
   }
 
   // Load the movie file 
@@ -50,6 +50,10 @@ class CutsceneScreen extends Component {
       </Fragment>
     )
   }
+}
+
+CutsceneScreen.propTypes = {
+  changeScreen: PropTypes.func.isRequired
 }
 
 export default CutsceneScreen;

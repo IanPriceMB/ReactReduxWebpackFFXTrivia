@@ -7,9 +7,9 @@ export const setCurrentCharacters = (current) => {
   })
 }
 
-export const setAvailableCharacters = (possible) => {
+export const setAvailableCharacters = (available) => {
   return ({
     type: SET_AVAILABLE_CHARACTERS, 
-    payload: possible
+    payload: available
   })
 }

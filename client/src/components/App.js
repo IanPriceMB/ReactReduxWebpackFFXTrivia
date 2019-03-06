@@ -26,13 +26,13 @@ class App extends Component {
             <MainMenuScreen changeScreen={this.changeScreen}></MainMenuScreen>
           ):(null)} 
           {this.state.screen == 'GameScreen'?(
-            <GameScreen></GameScreen>
+            <GameScreen changeScreen={this.changeScreen}></GameScreen>
           ):(null)} 
           {this.state.screen == 'CutsceneScreen'?(
             <CutsceneScreen  changeScreen={this.changeScreen}></CutsceneScreen>
           ):(null)} 
           {this.state.screen == 'CharacterSelectScreen'?(
-            <CharacterSelectScreen></CharacterSelectScreen>
+            <CharacterSelectScreen changeScreen={this.changeScreen}></CharacterSelectScreen>
           ):(null)}
         </Fragment>
       </Provider>

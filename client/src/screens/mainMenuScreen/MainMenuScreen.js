@@ -31,16 +31,9 @@ class MainMenuScreen extends Component {
 }
 
 MainMenuScreen.propTypes = {
+  changeScreen: PropTypes.func.isRequired,
   setLevel: PropTypes.func.isRequired,
-  level: PropTypes.string,
-  setCutscene: PropTypes.func.isRequired,
-  cutscene: PropTypes.string,
-  changeScreen: PropTypes.func.isRequired
+  setCutscene: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  level: state.level.currentLevel,
-  cutscene: state.scene.sceneName
-})
-
-export default connect(mapStateToProps, { setLevel, setCutscene })(MainMenuScreen);
+export default connect(null, { setLevel, setCutscene })(MainMenuScreen);
