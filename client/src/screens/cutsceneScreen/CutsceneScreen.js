@@ -27,7 +27,6 @@ class CutsceneScreen extends Component {
     if(this.state.lazy === null) {
       try {
         const movieFile = await import(`../../assets/movies/${this.state.cutscene}.mp4`);
-        
         this.setState({lazy: <video src={movieFile.default} autoPlay id='video'></video>})
 
         document.getElementById('video').addEventListener('ended', this.endScene, false)

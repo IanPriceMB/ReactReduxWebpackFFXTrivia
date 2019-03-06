@@ -22,17 +22,11 @@ class CharacterSelectScreen extends Component{
     this.props.setAvailableCharacters(achars);
   }
 
-  console = () => {
-    console.log(this.props)
-    console.log(this.state)
-  }
-
   render() {
     return (
       <Fragment>
         <CharacterSelectMenu pickable={this.props.available}></CharacterSelectMenu>
-        <OptionsMenu></OptionsMenu>
-        <button onClick={this.console}>click me</button>
+        {/* <OptionsMenu></OptionsMenu> */}
       </Fragment>
     )
   }
