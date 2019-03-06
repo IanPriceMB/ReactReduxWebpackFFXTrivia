@@ -34,6 +34,7 @@ class App extends Component {
           {this.state.screen == 'CharacterSelectScreen'?(
             <CharacterSelectScreen changeScreen={this.changeScreen}></CharacterSelectScreen>
           ):(null)}
+          <div className='background' id='background'></div>
         </Fragment>
       </Provider>
     );

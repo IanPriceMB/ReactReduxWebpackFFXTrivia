@@ -1,15 +1,18 @@
 .characterPanel{
+  background-color: navy;
+  border: 3px solid rgb(0, 0, 202);
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  display: flex;
   flex-basis: 30%;
   flex-grow: 1;
   height: 40%;
   margin: 1.5%;
-  background-color: rgb(53, 53, 53);
-  color: white;
-  border: 3px solid blue;
-  border-radius: 20px;
-  overflow: hidden;
   
-  display: flex;
+  &:hover,:focus{
+    border: 3px solid aqua;
+  }
 
   &__media{
       width: 30%;

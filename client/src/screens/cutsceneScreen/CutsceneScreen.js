@@ -37,7 +37,6 @@ class CutsceneScreen extends Component {
   }
 
   endScene = () =>{
-    if(this.state.scene )
     this.props.changeScreen('CharacterSelectScreen')
   }
 
