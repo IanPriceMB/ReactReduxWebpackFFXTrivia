@@ -59,7 +59,8 @@ class CharacterSelectScreen extends Component{
 
   // Sets the game screen and the chosen characters to Redux state
   startGame = () => {
-
+    this.props.changeScreen('GameScreen');
+    this.props.setCurrentCharacters(this.state.chosen);
   }
 
   render() {
@@ -69,7 +70,7 @@ class CharacterSelectScreen extends Component{
         <div className='characterSelectScreen'>
           <h1 className='characterSelectScreen__title'>Chose Up to 3 Characters ({this.state.chosen.length})</h1>
           <CharacterSelectMenu pickable={this.props.available} updateChosen={this.updateChosen}></CharacterSelectMenu>
-          <button><h3 onClick>Let's Go!</h3></button>
+          <button><h3 onClick={this.startGame}>Let's Go!</h3></button>
         </div>
       </Fragment>
     )
