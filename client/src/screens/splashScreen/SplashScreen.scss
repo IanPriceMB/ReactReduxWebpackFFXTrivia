@@ -14,16 +14,12 @@
     z-index: -1;
   }
 
-  
-  
-
   // This positions and styles the splash screen menu
   .splash {  
-    background-color: navy;
+    background-color: rgba(0, 0, 128, .7);
     border: 1px solid black;
     border-radius: 20px;
     color: white;
-    opacity: .7;
     padding: 20px;
     text-align: center;
 

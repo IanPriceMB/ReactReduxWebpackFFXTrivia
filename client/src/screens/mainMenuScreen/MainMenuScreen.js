@@ -1,3 +1,5 @@
+// The main menu controls the initial flow of the application
+// loggin in/ signing up allows for save states!
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './MainMenuScreen.scss';
@@ -11,6 +13,7 @@ class MainMenuScreen extends Component {
 
   }
   
+  // Set redux state to a new game state
   newGame = () => {
     this.props.setLevel('zanarkand_one');
     this.props.setCutscene('scene_one')

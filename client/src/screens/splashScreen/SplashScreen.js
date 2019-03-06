@@ -1,3 +1,5 @@
+// A simple splash page 
+
 import React, {Fragment} from 'react';
 import './SplashScreen.scss';
 

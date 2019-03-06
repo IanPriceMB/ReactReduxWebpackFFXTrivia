@@ -1,0 +1,30 @@
+.loader {
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.cutscenePlayer{
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+.skipButton{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 10%;
+  height: 5%;
+  color: white;
+  background-color: black;
+  font-size: 1em;
+  border-radius: 5px;
+}
