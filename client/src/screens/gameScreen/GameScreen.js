@@ -6,6 +6,7 @@ import { setLevel } from '../../actions/levelActions';
 import store from '../../store';
 import questionData from '../../assets/data/questionData';
 import {Timer} from '../../components/timer/Timer';
+import levelData from '../../assets/data/levelData';
 
 class GameScreen extends Component {
   constructor(props){
@@ -29,6 +30,8 @@ class GameScreen extends Component {
     const level = snapshot.level.currentLevel;
     const scene = snapshot.scene.sceneName;
 
+    this.check(scene);
+
     this.setState({party, level, scene});
 
     const path = `${level}_${scene}`
@@ -36,6 +39,8 @@ class GameScreen extends Component {
     this.setState({currentSet: currentSet});
     this.setState({currentQuestion: currentSet[0]})
   }
+
+
 
   // When an answer is selected evaluate it for correct/incorrect
   // Track the level score
@@ -48,7 +53,7 @@ class GameScreen extends Component {
 
     if(this.state.questionTracker == this.state.currentSet.length){
       //next scene or level reducer
-      console.log('here')
+      console.log(Object.keys(levelData));
       // If level updates to a new level show a score screen
   
       // On click of score screen button change to the cutscene screen

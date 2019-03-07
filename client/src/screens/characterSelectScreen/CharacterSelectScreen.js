@@ -6,6 +6,8 @@ import store from '../../store';
 import levelData from '../../assets/data/levelData';
 import {CharacterSelectMenu} from '../../components/characterSelect/CharacterSelectMenu';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
+import { setLevel } from '../../actions/levelActions'
+import { setCutscene } from '../../actions/cutsceneActions'
 import background from '../../assets/backgrounds/character_select.jpg';
 
 class CharacterSelectScreen extends Component{
@@ -22,14 +24,31 @@ class CharacterSelectScreen extends Component{
   // Update Redux with available characters
   // Update .background with the character select screen image.
   componentWillMount(){
-    const storeSnap = store.getState();
-    const currentLevel = storeSnap.level.currentLevel;
+    const snapshot = store.getState();
+    const currentLevel = snapshot.level.currentLevel;
+    const scene = snapshot.scene.sceneName;
+    this.check(currentLevel, scene);
+
     this.setState({level: currentLevel});
     const currentLevelData = levelData[currentLevel];
     const achars = currentLevelData.available_characters;
     this.props.setAvailableCharacters(achars);
     document.getElementById('background').style.backgroundImage = `url('${background}')`;
   }
+
+    //If it is scene_one that means it is a new level, therefore a cutscene should be played first
+    check = (level, scene) => {
+      const regex = /\_one$/;
+
+      if (level == 'new_game'){
+        this.props.setLevel('zanarkand_one');
+        this.props.changeScreen('CutsceneScreen')
+      } else if (regex.test(scene) && !levelData[level].cutscenes[scene].finished){
+        this.props.changeScreen('CutsceneScreen')
+      } else if (regex.test(scene) && levelData[level].cutscenes[scene].finished){
+        return;
+      }
+    }
 
   // On click of a character panel update chosen array
   // revisit this later it is pretty spaget
@@ -86,4 +105,4 @@ const mapStateToProps = state => ({
   current: state.characters.currentCharacters
 })
 
-export default connect(mapStateToProps, { setCurrentCharacters, setAvailableCharacters })(CharacterSelectScreen);
+export default connect(mapStateToProps, { setCurrentCharacters, setAvailableCharacters, setLevel, setCutscene })(CharacterSelectScreen);

@@ -13,9 +13,9 @@ class MainMenuScreen extends Component {
 
   }
   
-  // Set redux state to a new game state
+  // Set Redux state to a new game state
   newGame = () => {
-    this.props.setLevel('zanarkand_one');
+    this.props.setLevel('new_game');
     this.props.setCutscene('scene_one')
     this.props.changeScreen('CutsceneScreen');
   }

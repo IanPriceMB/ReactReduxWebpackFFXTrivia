@@ -23,7 +23,7 @@ class CutsceneScreen extends Component {
     const reduxState = store.getState();
     const level = reduxState.level.currentLevel;
     const scene = reduxState.scene.sceneName;
-    this.setState({cutscene: `${levelData[level].cutscenes[scene]}`, scene: scene});
+    this.setState({cutscene: `${levelData[level].cutscenes[scene].title}`, scene: scene});
   }
 
   // Lazy loading the movie file dynamically
@@ -31,6 +31,7 @@ class CutsceneScreen extends Component {
   async componentDidMount(){
     if(this.state.lazy === null) {
       try {
+        console.log(this.state.cutscene)
         const movieFile = await import(`../../assets/movies/${this.state.cutscene}.mp4`);
         this.setState({lazy: <video className='cutscenePlayer' src={movieFile.default} autoPlay id='video'></video>})
         document.getElementById('video').addEventListener('ended', this.endScene, false);
