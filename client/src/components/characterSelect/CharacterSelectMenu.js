@@ -5,7 +5,6 @@ import CharacterPanel from './characterpanel/CharacterPanel';
 
 
 export const CharacterSelectMenu = (props) => {
-
   const characters = props.pickable.map((character, i) => {
       return <CharacterPanel character={character} key={i} updateChosen={props.updateChosen}/>
   })

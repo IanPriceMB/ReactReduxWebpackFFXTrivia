@@ -2,12 +2,12 @@ import React, {Component, Fragment} from 'react';
 import './CharacterSelectScreen.scss';
 import { connect } from 'react-redux';
 import { setCurrentCharacters, setAvailableCharacters } from '../../actions/characterActions';
+import { setCutscene } from '../../actions/cutsceneActions';
+import { setLevel } from '../../actions/levelActions';
 import store from '../../store';
 import levelData from '../../assets/data/levelData';
 import {CharacterSelectMenu} from '../../components/characterSelect/CharacterSelectMenu';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
-import { setLevel } from '../../actions/levelActions'
-import { setCutscene } from '../../actions/cutsceneActions'
 import background from '../../assets/backgrounds/character_select.jpg';
 
 class CharacterSelectScreen extends Component{
@@ -15,7 +15,8 @@ class CharacterSelectScreen extends Component{
     super(props)
 
     this.state= {
-      chosen: []
+      chosen: [],
+      available: []
     }
   }
 
@@ -27,31 +28,35 @@ class CharacterSelectScreen extends Component{
     const snapshot = store.getState();
     const currentLevel = snapshot.level.currentLevel;
     const scene = snapshot.scene.sceneName;
-    this.check(currentLevel, scene);
 
-    this.setState({level: currentLevel});
-    const currentLevelData = levelData[currentLevel];
-    const achars = currentLevelData.available_characters;
-    this.props.setAvailableCharacters(achars);
-    document.getElementById('background').style.backgroundImage = `url('${background}')`;
-  }
+    // If it is scene_one that means it is a new level, therefore a cutscene should be played first
+    // Check failed if seperate fucntion as it had to wait to load to call .this causing the state to fail
+    const regex = /\_one$/;
+    if (regex.test(scene) && levelData[currentLevel].cutscenes[scene].finished){
+      if(Object.keys(levelData[currentLevel].cutscenes).length > 1){
+        //do nothing
+        const currentLevelData = levelData[currentLevel];
+        const achars = currentLevelData.available_characters;
+        this.props.setAvailableCharacters(achars);
+        this.setState({level: currentLevel, available: achars});
+        document.getElementById('background').style.backgroundImage = `url('${background}')`;
+      } 
+      else {
+        const levels = Object.keys(levelData);
+        let nextLevel;
 
-    //If it is scene_one that means it is a new level, therefore a cutscene should be played first
-    check = (level, scene) => {
-      const regex = /\_one$/;
+        for (let i = 0; i < levels.length; i++){
+          if(levels[i] == currentLevel){
+            nextLevel = levels[i+1];
+          }
+        }
 
-      if (level == 'new_game'){
-        this.props.setLevel('zanarkand_one');
-        this.props.changeScreen('CutsceneScreen')
-      } else if (regex.test(scene) && !levelData[level].cutscenes[scene].finished){
-        this.props.changeScreen('CutsceneScreen')
-      } else if (regex.test(scene) && levelData[level].cutscenes[scene].finished){
-        return;
+        this.props.setLevel(nextLevel);
+        this.props.changeScreen('CutsceneScreen');
       }
     }
+  }
 
-  // On click of a character panel update chosen array
-  // revisit this later it is pretty spaget
   updateChosen = character => {
     const clicked = document.getElementById(character);
     const value = clicked.getAttribute("data-chosen");
@@ -88,8 +93,9 @@ class CharacterSelectScreen extends Component{
         <OptionsMenu></OptionsMenu>
         <div className='characterSelectScreen'>
           <h1 className='characterSelectScreen__title'>Chose Up to 3 Characters ({this.state.chosen.length})</h1>
-          <CharacterSelectMenu pickable={this.props.available} updateChosen={this.updateChosen}></CharacterSelectMenu>
+          <CharacterSelectMenu pickable={this.state.available} updateChosen={this.updateChosen}></CharacterSelectMenu>
           <button><h3 onClick={this.startGame}>Let's Go!</h3></button>
+          <button onClick={() => console.log(this.props)}>click</button>
         </div>
       </Fragment>
     )

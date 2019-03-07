@@ -14,6 +14,7 @@ class CutsceneScreen extends Component {
     this.state = {
       cutscene: '',
       scene: '',
+      level: '',
       lazy: null
     }
   }
@@ -23,7 +24,7 @@ class CutsceneScreen extends Component {
     const reduxState = store.getState();
     const level = reduxState.level.currentLevel;
     const scene = reduxState.scene.sceneName;
-    this.setState({cutscene: `${levelData[level].cutscenes[scene].title}`, scene: scene});
+    this.setState({cutscene: `${levelData[level].cutscenes[scene].title}`, scene: scene, level: level});
   }
 
   // Lazy loading the movie file dynamically
@@ -31,7 +32,6 @@ class CutsceneScreen extends Component {
   async componentDidMount(){
     if(this.state.lazy === null) {
       try {
-        console.log(this.state.cutscene)
         const movieFile = await import(`../../assets/movies/${this.state.cutscene}.mp4`);
         this.setState({lazy: <video className='cutscenePlayer' src={movieFile.default} autoPlay id='video'></video>})
         document.getElementById('video').addEventListener('ended', this.endScene, false);
@@ -44,7 +44,9 @@ class CutsceneScreen extends Component {
   // This is called when the skip button is clicked
   // or when the cutscene ends
   endScene = () =>{
+    levelData[this.state.level].cutscenes[this.state.scene].finished = true;
     this.props.changeScreen('CharacterSelectScreen');
+    console.log(levelData)
   }
 
   render(){

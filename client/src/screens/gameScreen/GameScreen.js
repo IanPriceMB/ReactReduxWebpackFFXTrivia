@@ -29,11 +29,7 @@ class GameScreen extends Component {
     const party = snapshot.characters.currentCharacters;
     const level = snapshot.level.currentLevel;
     const scene = snapshot.scene.sceneName;
-
-    this.check(scene);
-
     this.setState({party, level, scene});
-
     const path = `${level}_${scene}`
     const currentSet = questionData[path];
     this.setState({currentSet: currentSet});
