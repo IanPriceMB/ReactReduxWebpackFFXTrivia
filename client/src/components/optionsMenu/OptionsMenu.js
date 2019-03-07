@@ -8,6 +8,7 @@ export const OptionsMenu = () =>
         <li>Save</li>
         <li>Volume</li>
         <li>Credits</li>
+        <li>Exit Without Saving</li>
       </ul>
     </div>
   )

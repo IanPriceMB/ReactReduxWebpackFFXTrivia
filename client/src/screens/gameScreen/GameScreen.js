@@ -5,7 +5,7 @@ import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel } from '../../actions/levelActions';
 import store from '../../store';
 import questionData from '../../assets/data/questionData';
-import {Timer} from '../../components/timer';
+import {Timer} from '../../components/timer/Timer';
 
 class GameScreen extends Component {
   constructor(props){
@@ -16,7 +16,9 @@ class GameScreen extends Component {
       level: '',
       scene: '', 
       currentSet: [],
-      currentQuestion: {}
+      currentQuestion: {},
+      questionTracker: 0,
+      levelScore: 0
     }
   }
 
@@ -35,22 +37,46 @@ class GameScreen extends Component {
     this.setState({currentQuestion: currentSet[0]})
   }
 
-  // Get the proper question data then load the initial question
-  componentDidMount(){
+  // When an answer is selected evaluate it for correct/incorrect
+  // Track the level score
+  // If no more questions update the leve/scene
+  // Change to the cutscene screen and play cutscene
+  choiceClick = (e) => {
+    const value = e.target.getAttribute('data-value');
+    const next = this.state.questionTracker + 1;
+    this.setState({questionTracker: next});
 
+    if(this.state.questionTracker == this.state.currentSet.length){
+      //next scene or level reducer
+      console.log('here')
+      // If level updates to a new level show a score screen
+  
+      // On click of score screen button change to the cutscene screen
+    }
+
+    if (value == 'true') {
+      const score = this.state.levelScore + 1;
+
+      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
+      this.setState({levelScore: score});
+    } else if (value == 'false') {
+      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
+    }
   }
 
+
+
   render(){
-    console.log()
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
-      <div key={i} data-value={answer.value}>{answer.answer}</div>
-    })
+      return <div key={i} data-value={answer.value} onClick={(e) => this.choiceClick(e)}>{answer.answer}</div>
+    });
     return (
       <Fragment>
         <div className='GameScreen' >
           <Timer></Timer>
           <div className='question'>{this.state.currentQuestion.question}</div>
           {answers}
+          <button onClick={() => console.log(this.state)}>click</button>
         </div>
       </Fragment>
     )
