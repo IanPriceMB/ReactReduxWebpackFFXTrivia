@@ -9,7 +9,7 @@ const SplashScreen = (props) => {
 
   useEffect(() => {
     pubsub.publish('playMusic')
-  })
+  },[])
 
   return (
     <Fragment>

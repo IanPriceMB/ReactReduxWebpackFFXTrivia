@@ -4,5 +4,5 @@ import './HealthBar.scss'
 export const HealthBar = props => {
   console.log(props)
 
-  return <div></div>
+  return <div>Health Reamaining {props.remainingLives}</div>
 }

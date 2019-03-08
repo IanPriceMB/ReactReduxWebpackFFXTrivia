@@ -1,36 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 export const Timer = (props) => {
-
+  const [time, setTime] = useState(5);
   // needs characters and life loss function
-  console.log(props)
 
-  let time;
-  let intervalID;
-  let remainingTime;
+  useEffect(()=> {
+    runTimer();
+  },[time])
 
   function runTimer() {
-    time = 20;
-
-    render();
-
-    clearInterval(intervalID);
-    intervalID = setInterval(tick, 1000);
-  };
-
-  function stop(){
-    clearInterval(intervalID);
-  };
-
-  function tick(){
-    time--;
-
-    remainingTime = time;
     if (time <= 0) {
-      stop();
-      // Lose a life
+      props.lifeLost();
+      return;
     } 
+    setTimeout(function(){
+      setTime(time-1)
+    }, 1000);
   };
 
-  return <div>{remainingTime}</div>
+  return <div>{time}</div>
 }

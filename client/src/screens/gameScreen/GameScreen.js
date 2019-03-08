@@ -62,12 +62,16 @@ class GameScreen extends Component {
       this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
       
     } else if (value == 'false') {
-      const life = this.state.levelScore - 1;
-      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker], lives: life});
+      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
+      this.lifeLost();
     }
   }
 
-
+  lifeLost = () => {
+    const currentLives = this.state.lives;
+    const newTotal = currentLives - 1;
+    this.setState({lives: newTotal})
+  }
 
   render(){
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
