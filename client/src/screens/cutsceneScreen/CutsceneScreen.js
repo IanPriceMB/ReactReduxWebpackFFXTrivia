@@ -46,7 +46,6 @@ class CutsceneScreen extends Component {
   endScene = () =>{
     levelData[this.state.level].cutscenes[this.state.scene].finished = true;
     this.props.changeScreen('CharacterSelectScreen');
-    console.log(levelData)
   }
 
   render(){

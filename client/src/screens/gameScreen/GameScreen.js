@@ -7,6 +7,7 @@ import store from '../../store';
 import questionData from '../../assets/data/questionData';
 import {Timer} from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
+import {HealthBar} from '../../components/healthBar/HealthBar';
 
 class GameScreen extends Component {
   constructor(props){
@@ -19,7 +20,7 @@ class GameScreen extends Component {
       currentSet: [],
       currentQuestion: {},
       questionTracker: 0,
-      levelScore: 0
+      lives: 3
     }
   }
 
@@ -56,12 +57,13 @@ class GameScreen extends Component {
     }
 
     if (value == 'true') {
-      const score = this.state.levelScore + 1;
+      
 
       this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
-      this.setState({levelScore: score});
+      
     } else if (value == 'false') {
-      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
+      const life = this.state.levelScore - 1;
+      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker], lives: life});
     }
   }
 
@@ -74,7 +76,8 @@ class GameScreen extends Component {
     return (
       <Fragment>
         <div className='GameScreen' >
-          <Timer></Timer>
+          <Timer lifeLost={this.lifeLost} party={this.state.party}></Timer>
+          <HealthBar remainingLives={this.state.lives}></HealthBar>
           <div className='question'>{this.state.currentQuestion.question}</div>
           {answers}
           <button onClick={() => console.log(this.state)}>click</button>
