@@ -9,7 +9,7 @@ import levelData from '../../assets/data/levelData';
 import {CharacterSelectMenu} from '../../components/characterSelect/CharacterSelectMenu';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
 import background from '../../assets/backgrounds/character_select.jpg';
-
+import pubsub from 'pubsub-js';
 class CharacterSelectScreen extends Component{
   constructor(props){
     super(props)
@@ -55,6 +55,10 @@ class CharacterSelectScreen extends Component{
         this.props.changeScreen('CutsceneScreen');
       }
     }
+  }
+
+  componentDidMount(){
+      pubsub.publish('playMusic')
   }
 
   updateChosen = character => {

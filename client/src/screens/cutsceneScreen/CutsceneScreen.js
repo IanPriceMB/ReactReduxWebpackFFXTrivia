@@ -2,10 +2,11 @@
 // in the Redux state
 
 import React, { Component, Fragment } from 'react';
-import './CutsceneScreen.scss'
+import './CutsceneScreen.scss';
 import PropTypes from 'prop-types';
 import store from '../../store';
-import levelData from '../../assets/data/levelData'
+import levelData from '../../assets/data/levelData';
+import pubsub from 'pubsub-js';
 
 class CutsceneScreen extends Component {
   constructor (props){
@@ -15,7 +16,8 @@ class CutsceneScreen extends Component {
       cutscene: '',
       scene: '',
       level: '',
-      lazy: null
+      lazy: null,
+      lazyMusic: null
     }
   }
 
@@ -30,22 +32,32 @@ class CutsceneScreen extends Component {
   // Lazy loading the movie file dynamically
   // Add event listener for ending the movie
   async componentDidMount(){
+    pubsub.publish('pauseMusic');
     if(this.state.lazy === null) {
       try {
         const movieFile = await import(`../../assets/movies/${this.state.cutscene}.mp4`);
-        this.setState({lazy: <video className='cutscenePlayer' src={movieFile.default} autoPlay id='video'></video>})
+        this.setState({lazy: <video className='cutscenePlayer' src={movieFile.default} autoPlay id='video'></video>});
         document.getElementById('video').addEventListener('ended', this.endScene, false);
       } catch(err) {
         this.setState({lazy: <div>{`Failed to load component: ${err}`}</div>});
       }
     }
+
   }
 
   // This is called when the skip button is clicked
   // or when the cutscene ends
-  endScene = () =>{
-    levelData[this.state.level].cutscenes[this.state.scene].finished = true;
-    this.props.changeScreen('CharacterSelectScreen');
+  endScene = async() =>{
+    try {
+      const nextMusic = await import(`../../assets/music/${this.state.cutscene}.mp3`);
+      pubsub.publish('changeTrack', nextMusic.default);
+      levelData[this.state.level].cutscenes[this.state.scene].finished = true;
+      this.props.changeScreen('CharacterSelectScreen');
+    } catch(err) {
+      console.log(err)
+      levelData[this.state.level].cutscenes[this.state.scene].finished = true;
+      this.props.changeScreen('CharacterSelectScreen');
+    }
   }
 
   render(){
