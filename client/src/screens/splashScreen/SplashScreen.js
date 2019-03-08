@@ -1,9 +1,15 @@
 // A simple splash page 
 
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import './SplashScreen.scss';
 
+import pubsub from 'pubsub-js';
+
 const SplashScreen = (props) => {
+
+  useEffect(() => {
+    pubsub.publish('playMusic')
+  })
 
   return (
     <Fragment>

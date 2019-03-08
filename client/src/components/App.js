@@ -7,6 +7,7 @@ import MainMenuScreen from '../screens/mainMenuScreen/MainMenuScreen';
 import SplashScreen from '../screens/splashScreen/SplashScreen';
 import { Provider } from 'react-redux';
 import store from '../store';
+import MusicPlayer from './music/MusicPlayer';
 
 class App extends Component {
   state = {screen: 'SplashScreen'};
@@ -19,6 +20,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Fragment>
+          <MusicPlayer></MusicPlayer>
           { this.state.screen == 'SplashScreen'?(
             <SplashScreen changeScreen={this.changeScreen}></SplashScreen> 
           ):(null)} 

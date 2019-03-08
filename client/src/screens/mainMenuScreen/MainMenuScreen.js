@@ -12,6 +12,16 @@ class MainMenuScreen extends Component {
     super(props)
 
   }
+
+  componentDidMount(){
+    var mp = document.querySelector('audio');
+    var src = mp.getElementsByTagName('source');
+    var song = src[0].getAttribute('src');
+
+    if(song !== '9057516a2133e81478ebe677bcba97cf.mp3'){
+      song = '9057516a2133e81478ebe677bcba97cf.mp3';
+    }
+  }
   
   // Set Redux state to a new game state
   newGame = () => {

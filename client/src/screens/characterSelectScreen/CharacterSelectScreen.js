@@ -95,7 +95,6 @@ class CharacterSelectScreen extends Component{
           <h1 className='characterSelectScreen__title'>Chose Up to 3 Characters ({this.state.chosen.length})</h1>
           <CharacterSelectMenu pickable={this.state.available} updateChosen={this.updateChosen}></CharacterSelectMenu>
           <button><h3 onClick={this.startGame}>Let's Go!</h3></button>
-          <button onClick={() => console.log(this.props)}>click</button>
         </div>
       </Fragment>
     )
