@@ -19,7 +19,7 @@ class GameScreen extends Component {
       scene: '', 
       currentSet: [],
       currentQuestion: {},
-      questionTracker: 0,
+      questionTracker: 1,
       lives: 3
     }
   }
@@ -45,8 +45,7 @@ class GameScreen extends Component {
   // Change to the cutscene screen and play cutscene
   choiceClick = (e) => {
     const value = e.target.getAttribute('data-value');
-    const next = this.state.questionTracker + 1;
-    this.setState({questionTracker: next});
+    this.updateQuestionTracker();
 
     if(this.state.questionTracker == this.state.currentSet.length){
       //next scene or level reducer
@@ -57,12 +56,9 @@ class GameScreen extends Component {
     }
 
     if (value == 'true') {
-      
-
-      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
-      
+      this.nextQuestion();
     } else if (value == 'false') {
-      this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
+      this.nextQuestion();
       this.lifeLost();
     }
   }
@@ -73,6 +69,15 @@ class GameScreen extends Component {
     this.setState({lives: newTotal})
   }
 
+  updateQuestionTracker = () => {
+    const next = this.state.questionTracker + 1;
+    this.setState({questionTracker: next});
+  }
+
+  nextQuestion = () => {
+    this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
+  }
+
   render(){
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
       return <div key={i} data-value={answer.value} onClick={(e) => this.choiceClick(e)}>{answer.answer}</div>
@@ -80,7 +85,12 @@ class GameScreen extends Component {
     return (
       <Fragment>
         <div className='GameScreen' >
-          <Timer lifeLost={this.lifeLost} party={this.state.party}></Timer>
+          <Timer 
+            lifeLost={this.lifeLost} 
+            party={this.state.party} 
+            nextQuestion={this.nextQuestion}
+            updateQuestionTracker={this.updateQuestionTracker}
+          ></Timer>
           <HealthBar remainingLives={this.state.lives}></HealthBar>
           <div className='question'>{this.state.currentQuestion.question}</div>
           {answers}
