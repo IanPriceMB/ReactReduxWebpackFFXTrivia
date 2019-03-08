@@ -5,7 +5,7 @@ import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel } from '../../actions/levelActions';
 import store from '../../store';
 import questionData from '../../assets/data/questionData';
-import {Timer} from '../../components/timer/Timer';
+import Timer from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
 import {HealthBar} from '../../components/healthBar/HealthBar';
 
@@ -19,7 +19,7 @@ class GameScreen extends Component {
       scene: '', 
       currentSet: [],
       currentQuestion: {},
-      questionTracker: 1,
+      questionTracker: 0,
       lives: 3
     }
   }
@@ -80,7 +80,7 @@ class GameScreen extends Component {
 
   render(){
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
-      return <div key={i} data-value={answer.value} onClick={(e) => this.choiceClick(e)}>{answer.answer}</div>
+      return <div key={i} data-value={answer.value} onClick={(e) => this.choiceClick(e)} className='answer'>{answer.answer}</div>
     });
     return (
       <Fragment>
@@ -90,6 +90,8 @@ class GameScreen extends Component {
             party={this.state.party} 
             nextQuestion={this.nextQuestion}
             updateQuestionTracker={this.updateQuestionTracker}
+            questionTracker={this.state.questionTracker}
+            currentSet={this.state.currentSet}
           ></Timer>
           <HealthBar remainingLives={this.state.lives}></HealthBar>
           <div className='question'>{this.state.currentQuestion.question}</div>

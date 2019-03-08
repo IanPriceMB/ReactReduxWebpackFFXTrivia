@@ -1,25 +1,47 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component} from 'react';
 
-export const Timer = (props) => {
-  const [time, setTime] = useState(5);
-  // needs characters and life loss function next question function
+class Timer extends Component {
+  constructor(props){
+    super(props)
+    
+    this.state = {
+      time: null,
+      intervalID: null
+    }
+  }
 
-  useEffect(()=> {
-    runTimer();
-  },[time])
+  componentDidMount(){
+    this.runTimer();
+  }
 
-  function runTimer() {
-    if (time == -1) {
-      props.lifeLost();
-      props.updateQuestionTracker();
-      props.nextQuestion();
-      setTime(5);
-      return;
-    } 
-    setTimeout(function(){
-      setTime(time-1)
-    }, 1000);
+  runTimer = () => {
+    this.state.time = 5;
+
+    clearInterval(this.state.intervalID);
+    this.setState({intervalID: setInterval(this.tick, 1000)})
   };
 
-  return <div>{time}</div>
+  stop = () => {
+    clearInterval(this.state.intervalID);
+  };
+
+  tick = () => {
+    this.setState({state: this.state.time--});
+    if (this.state.time <= 0) {
+      this.props.lifeLost();
+      this.props.updateQuestionTracker();
+      this.props.nextQuestion();
+      this.stop();
+      if(this.props.questionTracker !== this.props.currentSet.length){
+        this.runTimer();
+      }
+    } 
+  };
+
+  render(){
+    return <div>{this.state.time}</div>
+  }
+
 }
+
+export default Timer;
