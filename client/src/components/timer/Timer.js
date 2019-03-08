@@ -12,6 +12,9 @@ class Timer extends Component {
 
   componentDidMount(){
     this.runTimer();
+    document.querySelector('.answer').addEventListener('click', () => {
+      this.setState({time: 20})
+    })
   }
 
   runTimer = () => {
