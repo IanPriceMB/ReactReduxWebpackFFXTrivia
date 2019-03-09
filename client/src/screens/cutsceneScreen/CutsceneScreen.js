@@ -16,8 +16,7 @@ class CutsceneScreen extends Component {
       cutscene: '',
       scene: '',
       level: '',
-      lazy: null,
-      lazyMusic: null
+      lazy: null
     }
   }
 
@@ -54,7 +53,6 @@ class CutsceneScreen extends Component {
       levelData[this.state.level].cutscenes[this.state.scene].finished = true;
       this.props.changeScreen('CharacterSelectScreen');
     } catch(err) {
-      console.log(err)
       levelData[this.state.level].cutscenes[this.state.scene].finished = true;
       this.props.changeScreen('CharacterSelectScreen');
     }

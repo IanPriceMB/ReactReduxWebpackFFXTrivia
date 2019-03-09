@@ -19,9 +19,11 @@ class GameScreen extends Component {
       scene: '', 
       currentSet: [],
       currentQuestion: {},
-      questionTracker: 0,
+      questionTracker: 5,
       lives: 3
     }
+
+    this.choiceClick = this.choiceClick.bind(this);
   }
 
   // Get a snapshot of the Redux state and set it equal to component state
@@ -44,23 +46,41 @@ class GameScreen extends Component {
   // If no more questions update the leve/scene
   // Change to the cutscene screen and play cutscene
   choiceClick = (e) => {
-    const value = e.target.getAttribute('data-value');
-    this.updateQuestionTracker();
+    // const value = e.target.getAttribute('data-value');
+    // this.updateQuestionTracker();
 
-    if(this.state.questionTracker == this.state.currentSet.length){
+    // Object.keys(levelData).find(this.state.level)
+    Object.keys(levelData).forEach((level)=>{
+      if(level == this.state.level){
+        Object.keys(levelData[level].cutscenes).forEach(scene => {
+          if(!levelData[level].cutscenes[scene].finished){
+            console.log(levelData[level].cutscenes[scene].finished)
+            this.props.setCutscene(scene);
+            this.props.changeScreen('CutsceneScreen');
+          }
+        })
+      }
+    })
+
+    // for(let i = 0; i < levelData.length; i++){
+    //   if (level == levelData[i]){
+    //     this.props.setLevel(levelData[i+1]);
+    //     this.props.setCutscene('scene_one');
+    //   }
+    // }
+    // this.props.changeScreen('CutsceneScreen');
+    // if(this.state.questionTracker >= this.state.currentSet.length){
       //next scene or level reducer
-      console.log(Object.keys(levelData));
       // If level updates to a new level show a score screen
   
       // On click of score screen button change to the cutscene screen
     }
-
-    if (value == 'true') {
-      this.nextQuestion();
-    } else if (value == 'false') {
-      this.nextQuestion();
-      this.lifeLost();
-    }
+    // if (value == 'true') {
+    //   this.nextQuestion();
+    // } else if (value == 'false') {
+    //   this.nextQuestion();
+    //   this.lifeLost();
+    // }
   }
 
   lifeLost = () => {
@@ -84,7 +104,8 @@ class GameScreen extends Component {
     });
     return (
       <Fragment>
-        <div className='GameScreen' >
+        <button onClick={(e) => this.choiceClick(e)}>click me</button>
+        {/* <div className='GameScreen' >
           <Timer 
             lifeLost={this.lifeLost} 
             party={this.state.party} 
@@ -96,8 +117,7 @@ class GameScreen extends Component {
           <HealthBar remainingLives={this.state.lives}></HealthBar>
           <div className='question'>{this.state.currentQuestion.question}</div>
           {answers}
-          <button onClick={() => console.log(this.state)}>click</button>
-        </div>
+        </div> */}
       </Fragment>
     )
   }
