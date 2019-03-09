@@ -17,7 +17,7 @@ class GameScreen extends Component {
       currentSet: [],
       currentQuestion: {},
       questionTracker: 0,
-      lives: 3
+      lives: 5
     }
 
     this.sceneChangeChecker = this.sceneChangeChecker.bind(this)
@@ -53,28 +53,26 @@ class GameScreen extends Component {
     // If not at the end of questions update player health and render next question
     const value = e.target.getAttribute('data-value');
     this.updateQuestionTracker();
-
     this.sceneChangeChecker();
-
     this.nextQuestion();
-
-
     if (value == 'false') {
       this.lifeLost();
     }
   }
 
+  // Check if we need to move to the next scene 
+  // If yes hit redux with the dispatch
   nextScene = () => {
     try {
       Object.keys(levelData[this.props.level].cutscenes).forEach(scene => {
         if(!levelData[this.props.level].cutscenes[scene].finished){
           this.props.setCutscene(scene);
           this.props.changeScreen('CutsceneScreen');
-          throw BreakException;
+          throw 'BreakException';
         }
       })
     } catch (e) {
-      if (e !== BreakException) throw e;
+      if (e !== 'BreakException') throw e;
     }
   }
 
