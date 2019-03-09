@@ -28,6 +28,9 @@ class GameScreen extends Component {
   }
 
   componentDidMount() {
+    document.querySelector('.answer').addEventListener('click', (e) => {
+      this.choiceClick(e);
+    })
   }
 
   getObjectKeyIndex = (obj, keyToFind) => {
@@ -48,43 +51,29 @@ class GameScreen extends Component {
     const value = e.target.getAttribute('data-value');
     this.updateQuestionTracker();
 
-    if (value == 'true') {
-      this.nextQuestion();
+    if(this.state.questionTracker == this.state.currentSet.length){
+      this.nextScene();
+    }
 
-    } else if (value == 'false') {
-      this.nextQuestion();
+    this.nextQuestion();
+
+    
+    if (value == 'false') {
       this.lifeLost();
     }
   }
 
-  nextSceneCheck = () => {
-    const regex = /\_final$/;
-    console.log(this.props.scene)
-    if (!regex.test(this.props.scene)){
-      try {
-        Object.keys(levelData[this.props.level].cutscenes).forEach(scene => {
-          if(!levelData[this.props.level].cutscenes[scene].finished){
-            this.props.setCutscene(scene);
-            this.props.changeScreen('CutsceneScreen');
-            throw BreakException;
-          }
-        })
-      } catch (e) {
-        if (e !== BreakException) throw e;
-      }
-
-    } else if (regex.test(this.props.scene)){
-      let arr = []
-      Object.keys(levelData).forEach(key => {
-        arr.push(key);
+  nextScene = () => {
+    try {
+      Object.keys(levelData[this.props.level].cutscenes).forEach(scene => {
+        if(!levelData[this.props.level].cutscenes[scene].finished){
+          this.props.setCutscene(scene);
+          this.props.changeScreen('CutsceneScreen');
+          throw BreakException;
+        }
       })
-      const clevelindex = this.getObjectKeyIndex(levelData, this.props.level)
-      const nlevelindex = clevelindex+1
-      const nlevel = arr[nlevelindex]
-      console.log(nlevel)
-      // this.props.setLevel(nlevel);
-      this.props.setCutscene('scene_one');
-      this.props.changeScreen('CutsceneScreen');
+    } catch (e) {
+      if (e !== BreakException) throw e;
     }
   }
 
@@ -100,11 +89,8 @@ class GameScreen extends Component {
   };
 
   nextQuestion = () => {
-    this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
-
-    if(this.state.questionTracker == this.state.currentSet.length){
-      this.nextSceneCheck();
-    }
+    const next = this.state.questionTracker;
+    this.setState({currentQuestion: this.state.currentSet[next]});
   };
 
   render(){
@@ -112,7 +98,7 @@ class GameScreen extends Component {
       return <div 
         key={i} 
         data-value={answer.value} 
-        onClick={(e) => this.choiceClick(e)} 
+        // onClick={this.choiceClick} 
         className='answer'>
         {answer.answer}
       </div>

@@ -5,7 +5,7 @@ class Timer extends Component {
     super(props)
     
     this.state = {
-      time: null,
+      time: 20,
       intervalID: null
     }
   }
@@ -13,13 +13,13 @@ class Timer extends Component {
   componentDidMount(){
     this.runTimer();
     document.querySelector('.answer').addEventListener('click', () => {
-      this.setState({time: 20})
+      clearInterval(this.state.intervalID);
+      this.setState({time: 20});
+      this.runTimer();
     })
   }
 
   runTimer = () => {
-    this.state.time = 5;
-
     clearInterval(this.state.intervalID);
     this.setState({intervalID: setInterval(this.tick, 1000)})
   };
