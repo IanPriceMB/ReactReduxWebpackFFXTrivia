@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel } from '../../actions/levelActions';
-import store from '../../store';
 import questionData from '../../assets/data/questionData';
 import Timer from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
@@ -14,14 +13,10 @@ class GameScreen extends Component {
     super (props)
 
     this.state ={
-      party: [],
-      level: '',
-      scene: '', 
       currentSet: [],
       currentQuestion: {},
       questionTracker: 0,
-      lives: 3,
-      nextLevel: ''
+      lives: 3
     }
 
     this.choiceClick = this.choiceClick.bind(this);
@@ -29,16 +24,9 @@ class GameScreen extends Component {
 
   // Get a snapshot of the Redux state and set it equal to component state
   componentWillMount(){
-    const snapshot = store.getState();
-    const party = snapshot.characters.currentCharacters;
-    const level = snapshot.level.currentLevel;
-    const scene = snapshot.scene.sceneName;
-    this.setState({party, level, scene});
-
-    const path = `${level}_${scene}`
+    const path = `${this.props.level}_${this.props.scene}`
     const currentSet = questionData[path];
-    this.setState({currentSet: currentSet});
-    this.setState({currentQuestion: currentSet[0]})
+    this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
   }
 
   getObjectKeyIndex = (obj, keyToFind) => {
@@ -50,7 +38,7 @@ class GameScreen extends Component {
         i++;
     }
     return null;
-}
+  }
 
 
   // When an answer is selected evaluate it for correct/incorrect
@@ -60,39 +48,42 @@ class GameScreen extends Component {
   choiceClick = (e) => {
     // Next scene update Redux
     if(this.state.questionTracker == this.state.currentSet.length){
-      const regex = /\_final$/;
-      if (!regex.test(this.state.scene)){
-        Object.keys(levelData[this.state.level].cutscenes).forEach(scene => {
-          if(!levelData[this.state.level].cutscenes[scene].finished){
-            this.props.setCutscene(scene);
-            this.props.changeScreen('CutsceneScreen');
-          }
-        })
-      } else if (regex.test(this.state.scene)){
-        let arr = []
-        Object.keys(levelData).forEach(key => {
-          arr.push(key);
-        })
-        const clevelindex = this.getObjectKeyIndex(levelData, this.state.level)
-        const nlevelindex = clevelindex+1
-        const nlevel = arr[nlevelindex]
-        this.props.setLevel(nlevel);
-        this.props.setCutscene('scene_one');
-        this.props.changeScreen('CutsceneScreen');
-      }
-
-      // If level updates to a new level show a score screen
-  
-      // On click of score screen button change to the cutscene screen
+      this.nextScenecheck();
     }
+    
+    // If not at the end of questions update player health and render next question
     const value = e.target.getAttribute('data-value');
     this.updateQuestionTracker();
 
     if (value == 'true') {
       this.nextQuestion();
+
     } else if (value == 'false') {
       this.nextQuestion();
       this.lifeLost();
+    }
+  }
+
+  nextScenecheck = () => {
+    const regex = /\_final$/;
+    if (!regex.test(this.props.scene)){
+      Object.keys(levelData[this.props.level].cutscenes).forEach(scene => {
+        if(!levelData[this.props.level].cutscenes[scene].finished){
+          this.props.setCutscene(scene);
+          this.props.changeScreen('CutsceneScreen');
+        }
+      })
+    } else if (regex.test(this.props.scene)){
+      let arr = []
+      Object.keys(levelData).forEach(key => {
+        arr.push(key);
+      })
+      const clevelindex = this.getObjectKeyIndex(levelData, this.props.level)
+      const nlevelindex = clevelindex+1
+      const nlevel = arr[nlevelindex]
+      this.props.setLevel(nlevel);
+      this.props.setCutscene('scene_one');
+      this.props.changeScreen('CutsceneScreen');
     }
   }
 
@@ -100,20 +91,26 @@ class GameScreen extends Component {
     const currentLives = this.state.lives;
     const newTotal = currentLives - 1;
     this.setState({lives: newTotal})
-  }
+  };
 
   updateQuestionTracker = () => {
     const next = this.state.questionTracker + 1;
     this.setState({questionTracker: next});
-  }
+  };
 
   nextQuestion = () => {
     this.setState({currentQuestion: this.state.currentSet[this.state.questionTracker]});
-  }
+  };
 
   render(){
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
-      return <div key={i} data-value={answer.value} onClick={(e) => this.choiceClick(e)} className='answer'>{answer.answer}</div>
+      return <div 
+        key={i} 
+        data-value={answer.value} 
+        onClick={(e) => this.choiceClick(e)} 
+        className='answer'>
+        {answer.answer}
+      </div>
     });
     return (
       <Fragment>
@@ -121,7 +118,7 @@ class GameScreen extends Component {
         <div className='GameScreen' >
           <Timer 
             lifeLost={this.lifeLost} 
-            party={this.state.party} 
+            party={this.props.party} 
             nextQuestion={this.nextQuestion}
             updateQuestionTracker={this.updateQuestionTracker}
             questionTracker={this.state.questionTracker}
@@ -132,8 +129,15 @@ class GameScreen extends Component {
           {answers}
         </div>
       </Fragment>
-    )
-  }
-}
+    );
+  };
+};
 
-export default connect(null, { setCutscene, setLevel })(GameScreen);
+const mapStateToProps = state => ({
+  available: state.characters.availableCharacters,
+  current: state.characters.currentCharacters,
+  level: state.level.currentLevel,
+  scene: state.scene.sceneName
+});
+
+export default connect(mapStateToProps, { setCutscene, setLevel })(GameScreen);
