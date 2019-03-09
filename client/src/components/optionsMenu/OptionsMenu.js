@@ -1,3 +1,5 @@
+// Renders and controls the options menu 
+
 import React from 'react';
 
 export const OptionsMenu = () => 

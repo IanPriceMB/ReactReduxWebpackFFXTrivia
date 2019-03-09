@@ -11,36 +11,33 @@ import pubsub from 'pubsub-js';
 
 class GameScreen extends Component {
   constructor(props){
-    super (props)
+    super (props);
 
     this.state ={
       currentSet: [],
       currentQuestion: {},
       questionTracker: 0,
-      lives: 1
-    }
+      lives: 5
+    };
 
-    this.sceneChangeChecker = this.sceneChangeChecker.bind(this)
-  }
+    this.sceneChangeChecker = this.sceneChangeChecker.bind(this);
+  };
 
   componentWillMount(){
-    const path = `${this.props.level}_${this.props.scene}`
+    const path = `${this.props.level}_${this.props.scene}`;
     const currentSet = questionData[path];
     this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
-    pubsub.publish('setBackground', 'data')
-  }
+    pubsub.publish('setBackground', 'data');
+  };
 
   componentDidMount() {
     var x = document.getElementsByClassName('answer');
-
     for (let i = 0; i < x.length; i++){
       x[i].addEventListener('click', (e) => {
         this.choiceClick(e);
-      })
-    }
-    
-
-  }
+      });
+    };
+  };
 
   getObjectKeyIndex = (obj, keyToFind) => {
     var i = 0, key;
@@ -51,7 +48,7 @@ class GameScreen extends Component {
         i++;
     }
     return null;
-  }
+  };
 
   // If no more questions update the leve/scene
   // When an answer is selected evaluate it for correct/incorrect
@@ -64,10 +61,10 @@ class GameScreen extends Component {
       this.lifeLost();
       if(this.state.lives == 0){
         this.gameLost();
-      }
-    }
+      };
+    };
     this.nextQuestion();
-  }
+  };
 
   // Check if we need to move to the next scene 
   // If yes hit redux with the dispatch
@@ -78,12 +75,12 @@ class GameScreen extends Component {
           this.props.setCutscene(scene);
           this.props.changeScreen('CutsceneScreen');
           throw 'BreakException';
-        }
-      })
+        };
+      });
     } catch (e) {
       if (e !== 'BreakException') throw e;
-    }
-  }
+    };
+  };
 
   lifeLost = () => {
     const currentLives = this.state.lives;
@@ -104,20 +101,19 @@ class GameScreen extends Component {
   sceneChangeChecker = () => {
     if(this.state.questionTracker == this.state.currentSet.length){
       this.nextScene();
-    }
-  }
+    };
+  };
 
   gameLost = () => {
     this.props.gameLoss(true);
     this.props.changeScreen('CutsceneScreen');
-  }
+  };
 
   render(){
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
       return <div 
         key={i} 
         data-value={answer.value} 
-        // onClick={this.choiceClick} 
         className='answer'>
         {answer.answer}
       </div>

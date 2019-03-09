@@ -1,6 +1,6 @@
 // A simple splash page 
 
-import React, {Fragment, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import './SplashScreen.scss';
 
 import pubsub from 'pubsub-js';
@@ -8,11 +8,10 @@ import pubsub from 'pubsub-js';
 const SplashScreen = (props) => {
 
   useEffect(() => {
-    pubsub.publish('playMusic')
-  },[])
+    pubsub.publish('playMusic');
+  },[]);
 
   return (
-    <Fragment>
       <div className='splash'>
         <h1 className='splash__title'>Final Fantasy X Trivia</h1>
         <h3 className='splash__subtitle'>Created by Ian Price</h3>
@@ -20,8 +19,7 @@ const SplashScreen = (props) => {
           <h2 className='splash__button__text'>Blitz Off!</h2>
         </button>
       </div>
-    </Fragment>
-  )
-}
+  );
+};
 
 export default SplashScreen;

@@ -1,7 +1,10 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux';
-import './Background.scss'
-import pubsub from 'pubsub-js'
+// This file contains the code for dynamically loading and switching the
+// background picture displayed in different areas of the game
+
+import React, { Component } from 'react';
+import  {connect } from 'react-redux';
+import './Background.scss';
+import pubsub from 'pubsub-js';
 
 class Background extends Component{
 
@@ -17,7 +20,7 @@ class Background extends Component{
       const background = await import(`../../assets/backgrounds/${this.props.level}_${this.props.scene}.png`);
       document.getElementById('background').style.backgroundImage = `url('${background.default}')`;
     }catch(err) {
-      console.log(err)
+      console.log(err);
     } 
   }
   componentWillUnmount() {

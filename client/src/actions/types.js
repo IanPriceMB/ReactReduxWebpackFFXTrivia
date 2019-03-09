@@ -1,3 +1,5 @@
+// This file is an Enum of all action types
+
 export const SET_LEVEL = 'SET_LEVEL';
 export const GAME_LOSS  = 'GAME_LOSS';
 

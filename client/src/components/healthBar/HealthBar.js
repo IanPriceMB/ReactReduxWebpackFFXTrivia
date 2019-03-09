@@ -1,5 +1,7 @@
+// This component shows the HP state of the player
+
 import React from 'react';
-import './HealthBar.scss'
+import './HealthBar.scss';
 
 export const HealthBar = props => {
   const livesRemaining = [];
@@ -10,4 +12,4 @@ export const HealthBar = props => {
     return <i key={life} className="fas fa-heart"></i>
   });
   return <div>Health Reamaining {hearts}</div>
-}
+};

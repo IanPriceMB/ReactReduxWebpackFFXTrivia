@@ -1,3 +1,5 @@
+// This file is for constructing each character panel for the character select Menu
+
 import React from 'react';
 import './CharacterPanel.scss';
 import characterData from '../../../assets/data/characterData';
@@ -43,8 +45,7 @@ const CharacterPanel = props => {
         </p>
       </div>
     </div>
-  )
-
-}
+  );
+};
 export default CharacterPanel;
 
