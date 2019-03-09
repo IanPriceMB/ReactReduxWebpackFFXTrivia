@@ -5,7 +5,6 @@ import React, { Component, Fragment } from 'react';
 import './CutsceneScreen.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {gameLoss} from '../../actions/levelActions'
 import levelData from '../../assets/data/levelData';
 import pubsub from 'pubsub-js';
 
@@ -21,9 +20,9 @@ class CutsceneScreen extends Component {
 
   // Get the level and cutscene to make a URL for the lazy loading
   componentWillMount(){
-    if (this.props.loss){
+    if (this.props.loss == true){
       this.setState({cutscene: 'game_loss'})
-    } else if (!this.props.loss) {
+    } else if (this.props.loss == false) {
       this.setState({cutscene: `${levelData[this.props.level].cutscenes[this.props.scene].title}`});
     }
   }
@@ -49,9 +48,6 @@ class CutsceneScreen extends Component {
   // or when the cutscene ends
   // Should try to find a better time to call this though to avoid desync load times
   endScene = () =>{
-    if(this.props.loss){
-      this.props.gameLoss(false)
-    } 
     try {
       pubsub.publish('changeTrack', this.state.cutscene);
       levelData[this.props.level].cutscenes[this.props.scene].finished = true;
@@ -82,4 +78,4 @@ const mapStateToProps = state => ({
   loss: state.level.gameLoss
 })
 
-export default connect(mapStateToProps, {gameLoss})(CutsceneScreen)
+export default connect(mapStateToProps, null)(CutsceneScreen)

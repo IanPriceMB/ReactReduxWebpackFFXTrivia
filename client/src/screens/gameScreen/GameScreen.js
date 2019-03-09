@@ -62,6 +62,9 @@ class GameScreen extends Component {
     this.sceneChangeChecker();
     if (value == 'false') {
       this.lifeLost();
+      if(this.state.lives == 0){
+        this.gameLost();
+      }
     }
     this.nextQuestion();
   }
@@ -94,9 +97,6 @@ class GameScreen extends Component {
   };
 
   nextQuestion = () => {
-    if(this.state.lives == 0){
-      this.gameLost();
-    }
     const next = this.state.questionTracker;
     this.setState({currentQuestion: this.state.currentSet[next]});
   };

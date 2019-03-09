@@ -3,7 +3,7 @@ import './CharacterSelectScreen.scss';
 import { connect } from 'react-redux';
 import { setCurrentCharacters, setAvailableCharacters } from '../../actions/characterActions';
 import { setCutscene } from '../../actions/cutsceneActions';
-import { setLevel } from '../../actions/levelActions';
+import { setLevel, gameLoss } from '../../actions/levelActions';
 import levelData from '../../assets/data/levelData';
 import {CharacterSelectMenu} from '../../components/characterSelect/CharacterSelectMenu';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
@@ -25,6 +25,7 @@ class CharacterSelectScreen extends Component{
   // Update Redux with available characters
   // Update .background with the character select screen image.
   componentWillMount(){
+    this.props.gameLoss(false);
     // If it is scene_one that means it is a new level, therefore a cutscene should be played first
     // Check failed if seperate fucntion as it had to wait to load to call .this causing the state to fail
     const regexOne = /\_one$/;
@@ -66,7 +67,7 @@ class CharacterSelectScreen extends Component{
   }
 
   componentDidMount(){
-    pubsub.publish('playMusic')
+    pubsub.publish('playMusic');
   }
 
   updateChosen = character => {
@@ -154,4 +155,4 @@ const mapStateToProps = state => ({
   scene: state.scene.sceneName
 })
 
-export default connect(mapStateToProps, { setCurrentCharacters, setAvailableCharacters, setLevel, setCutscene })(CharacterSelectScreen);
+export default connect(mapStateToProps, { setCurrentCharacters, setAvailableCharacters, setLevel, setCutscene, gameLoss })(CharacterSelectScreen);
