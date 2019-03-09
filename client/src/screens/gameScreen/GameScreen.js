@@ -56,13 +56,13 @@ class GameScreen extends Component {
     // If not at the end of questions update player health and render next question
     const value = e.target.getAttribute('data-value');
     this.updateQuestionTracker();
-    this.sceneChangeChecker();
     if (value == 'false') {
       this.lifeLost();
       if(this.state.lives == 0){
         this.gameLost();
       };
     };
+    this.sceneChangeChecker();
     this.nextQuestion();
   };
 
