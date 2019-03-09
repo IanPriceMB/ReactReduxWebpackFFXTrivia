@@ -1,4 +1,5 @@
 export const SET_LEVEL = 'SET_LEVEL';
+export const GAME_LOSS  = 'GAME_LOSS'
 
 export const SET_CUTSCENE = 'SET_CUTSCENE';
 

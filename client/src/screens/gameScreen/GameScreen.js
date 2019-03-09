@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setCutscene } from '../../actions/cutsceneActions';
-import { setLevel } from '../../actions/levelActions';
+import { setLevel, gameLoss } from '../../actions/levelActions';
 import questionData from '../../assets/data/questionData';
 import Timer from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
@@ -60,10 +60,10 @@ class GameScreen extends Component {
     const value = e.target.getAttribute('data-value');
     this.updateQuestionTracker();
     this.sceneChangeChecker();
-    this.nextQuestion();
     if (value == 'false') {
       this.lifeLost();
     }
+    this.nextQuestion();
   }
 
   // Check if we need to move to the next scene 
@@ -94,6 +94,9 @@ class GameScreen extends Component {
   };
 
   nextQuestion = () => {
+    if(this.state.lives == 0){
+      this.gameLost();
+    }
     const next = this.state.questionTracker;
     this.setState({currentQuestion: this.state.currentSet[next]});
   };
@@ -102,6 +105,11 @@ class GameScreen extends Component {
     if(this.state.questionTracker == this.state.currentSet.length){
       this.nextScene();
     }
+  }
+
+  gameLost = () => {
+    this.props.gameLoss(true);
+    this.props.changeScreen('CutsceneScreen');
   }
 
   render(){
@@ -142,4 +150,4 @@ const mapStateToProps = state => ({
   scene: state.scene.sceneName
 });
 
-export default connect(mapStateToProps, { setCutscene, setLevel })(GameScreen);
+export default connect(mapStateToProps, { setCutscene, setLevel, gameLoss })(GameScreen);
