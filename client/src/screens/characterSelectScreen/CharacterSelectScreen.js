@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { setCurrentCharacters, setAvailableCharacters } from '../../actions/characterActions';
 import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel } from '../../actions/levelActions';
-import store from '../../store';
 import levelData from '../../assets/data/levelData';
 import {CharacterSelectMenu} from '../../components/characterSelect/CharacterSelectMenu';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
 import background from '../../assets/backgrounds/character_select.jpg';
 import pubsub from 'pubsub-js';
+
 class CharacterSelectScreen extends Component{
   constructor(props){
     super(props)
@@ -94,7 +94,7 @@ class CharacterSelectScreen extends Component{
         proceed: 
         <div className='pickACharacter'>
           you must pick at least one character
-          <button onClick={this.setState({proceed: null})}>
+          <button onClick={() => this.setState({proceed: null})}>
             OK
           </button>
         </div>
@@ -108,7 +108,7 @@ class CharacterSelectScreen extends Component{
   render() {
     return (
       <Fragment>
-        {this.state.proceed || null}
+        {this.state.proceed != null ? this.state.proceed: null}
         <OptionsMenu></OptionsMenu>
         <div className='characterSelectScreen'>
           <h1 className='characterSelectScreen__title'>

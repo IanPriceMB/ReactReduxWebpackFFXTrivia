@@ -28,16 +28,14 @@ class MusicPlayer extends Component {
   }
   
   changeTrack = track => {
-    try{
       const music = document.getElementById('music');
       music.innerHTML = `<audio><source src="${track}" type="audio/mp3" /></audio>`;
-    } catch(err){
-      console.log(err)
-    }
   }
 
   componentWillUnmount(){
-    pubsub.unsubscribe(this.pubsub_event);
+    pubsub.unsubscribe(this.pubsub_play);
+    pubsub.unsubscribe(this.pubsub_stop);
+    pubsub.unsubscribe(this.pubsub_changeTrack);
   }
 
   render(){
