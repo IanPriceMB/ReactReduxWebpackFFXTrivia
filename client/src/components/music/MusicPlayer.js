@@ -27,9 +27,16 @@ class MusicPlayer extends Component {
     src[0].setAttribute('src', '');
   }
   
-  changeTrack = track => {
-      const music = document.getElementById('music');
-      music.innerHTML = `<audio><source src="${track}" type="audio/mp3" /></audio>`;
+  changeTrack = async (music) => {
+    try {
+      const nextMusic = await import(`../../assets/music/${music}.mp3`);
+      const musicPlayer = document.getElementById('music');
+      musicPlayer.innerHTML = `<audio><source src="${nextMusic.default}" type="audio/mp3" /></audio>`;
+      this.playMusic();
+    } catch (err) {
+      console.log(err)
+    }
+     
   }
 
   componentWillUnmount(){

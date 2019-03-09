@@ -43,11 +43,10 @@ class CutsceneScreen extends Component {
   // This is called when the skip button is clicked
   // or when the cutscene ends
   // Should try to find a better time to call this though to avoid desync load times
-  endScene = async() =>{
+  endScene = () =>{
     try {
-      const nextMusic = await import(`../../assets/music/${this.props.cutscene}.mp3`);
-      pubsub.publish('changeTrack', nextMusic.default);
-      levelData[this.props.level].cutscenes[this.state.scene].finished = true;
+      pubsub.publish('changeTrack', this.state.cutscene);
+      levelData[this.props.level].cutscenes[this.props.scene].finished = true;
       this.props.changeScreen('CharacterSelectScreen');
     } catch(err) {
       levelData[this.props.level].cutscenes[this.props.scene].finished = true;

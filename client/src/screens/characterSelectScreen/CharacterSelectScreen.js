@@ -25,29 +25,52 @@ class CharacterSelectScreen extends Component{
   // Update Redux with available characters
   // Update .background with the character select screen image.
   componentWillMount(){
-    console.log(this.props)
     // If it is scene_one that means it is a new level, therefore a cutscene should be played first
     // Check failed if seperate fucntion as it had to wait to load to call .this causing the state to fail
-    const regex = /\_one$/;
-    if (regex.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
+    const regexOne = /\_one$/;
+    const regexFinal = /\_final$/;
+    // If the first cutscene has not been played go to the cutscene screen and play it and mark it as played
+    // This should never fire
+    if (regexOne.test(this.props.scene) && !levelData[this.props.level].cutscenes[this.props.scene].finished) {
+      this.props.changeScreen('CutsceneScreen');
+    }
+    // If the first cutscene has been played continue on to the game screen
+    // This should fire at the start of every new 'level'
+    else  if (regexOne.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
       if(Object.keys(levelData[this.props.level].cutscenes).length > 1){
-        const currentLevelData = levelData[this.props.level];
-        const availableCharacters = currentLevelData.available_characters;
+        const availableCharacters = levelData[this.props.level].available_characters;
         this.props.setAvailableCharacters(availableCharacters);
         document.getElementById('background').style.backgroundImage = `url('${background}')`;
       } 
-      else {
-        const levels = Object.keys(levelData);
-        let nextLevel;
-        for (let i = 0; i < levels.length; i++){
-          if(levels[i] == this.props.level){
-            nextLevel = levels[i+1];
-            break;
-          }
+    }
+    // If it is not the first or the last cutscene but it has not been played play it and mark it as played
+    // This should never fire
+    else if (!regexFinal.test(this.props.scene) && !regexOne.test(this.props.scene) && !levelData[this.props.level].cutscenes[this.props.scene].finished){
+      console.log('in here')
+      this.props.changeScreen('CutsceneScreen');
+    } 
+    // If it is the final scene and it has not bee played play it
+    // This should never fire
+    else if (regexFinal.test(this.props.scene) && !levelData[this.props.level].cutscenes[this.props.scene].finished){
+      this.props.changeScreen('CutsceneScreen');
+    }
+    // If it is the final scene and it has already been played update the level and sceen to be the next level scene one
+    // Then go to the cut scene screen and play the level
+    // This should fire at the end of every level
+    else if (regexFinal.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
+      console.log(this.props.scene)
+      const levels = Object.keys(levelData);
+      let nextLevel;
+      for (let i = 0; i < levels.length; i++){
+        if(levels[i] == this.props.level){
+          nextLevel = levels[i+1];
+          break;
         }
-        this.props.setLevel(nextLevel);
-        this.props.changeScreen('CutsceneScreen');
       }
+      console.log(nextLevel)
+      this.props.setLevel(nextLevel);
+      this.props.setCutscene('scene_one')
+      this.props.changeScreen('CutsceneScreen');
     }
   }
 
