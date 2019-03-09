@@ -7,6 +7,7 @@ import questionData from '../../assets/data/questionData';
 import Timer from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
 import { HealthBar } from '../../components/healthBar/HealthBar';
+import pubsub from 'pubsub-js';
 
 class GameScreen extends Component {
   constructor(props){
@@ -26,6 +27,7 @@ class GameScreen extends Component {
     const path = `${this.props.level}_${this.props.scene}`
     const currentSet = questionData[path];
     this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
+    pubsub.publish('setBackground', 'data')
   }
 
   componentDidMount() {

@@ -8,6 +8,7 @@ import SplashScreen from '../screens/splashScreen/SplashScreen';
 import { Provider } from 'react-redux';
 import store from '../store';
 import MusicPlayer from './music/MusicPlayer';
+import Background from '../components/background/Background';
 
 class App extends Component {
   state = {screen: 'SplashScreen'};
@@ -36,7 +37,7 @@ class App extends Component {
           {this.state.screen == 'CharacterSelectScreen'?(
             <CharacterSelectScreen changeScreen={this.changeScreen}></CharacterSelectScreen>
           ):(null)}
-          <div className='background' id='background'></div>
+          <Background></Background>
         </Fragment>
       </Provider>
     );
