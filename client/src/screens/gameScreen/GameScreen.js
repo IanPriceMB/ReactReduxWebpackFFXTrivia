@@ -19,6 +19,7 @@ class GameScreen extends Component {
       lives: 3
     }
 
+    this.sceneChangeChecker = this.sceneChangeChecker.bind(this)
   }
 
   componentWillMount(){
@@ -51,13 +52,11 @@ class GameScreen extends Component {
     const value = e.target.getAttribute('data-value');
     this.updateQuestionTracker();
 
-    if(this.state.questionTracker == this.state.currentSet.length){
-      this.nextScene();
-    }
+    this.sceneChangeChecker();
 
     this.nextQuestion();
 
-    
+
     if (value == 'false') {
       this.lifeLost();
     }
@@ -93,6 +92,12 @@ class GameScreen extends Component {
     this.setState({currentQuestion: this.state.currentSet[next]});
   };
 
+  sceneChangeChecker = () => {
+    if(this.state.questionTracker == this.state.currentSet.length){
+      this.nextScene();
+    }
+  }
+
   render(){
     const answers = this.state.currentQuestion.answers.map((answer, i) => {
       return <div 
@@ -111,6 +116,7 @@ class GameScreen extends Component {
             party={this.props.party} 
             nextQuestion={this.nextQuestion}
             updateQuestionTracker={this.updateQuestionTracker}
+            sceneChangeChecker={this.sceneChangeChecker}
             questionTracker={this.state.questionTracker}
             currentSet={this.state.currentSet}
           ></Timer>

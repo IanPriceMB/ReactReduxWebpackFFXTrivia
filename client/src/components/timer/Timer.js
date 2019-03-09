@@ -5,7 +5,7 @@ class Timer extends Component {
     super(props)
     
     this.state = {
-      time: 20,
+      time: null,
       intervalID: null
     }
   }
@@ -13,14 +13,13 @@ class Timer extends Component {
   componentDidMount(){
     this.runTimer();
     document.querySelector('.answer').addEventListener('click', () => {
-      clearInterval(this.state.intervalID);
-      this.setState({time: 20});
+      this.stop();
       this.runTimer();
     })
   }
 
   runTimer = () => {
-    clearInterval(this.state.intervalID);
+    this.setState({time: 5});
     this.setState({intervalID: setInterval(this.tick, 1000)})
   };
 
@@ -31,10 +30,11 @@ class Timer extends Component {
   tick = () => {
     this.setState({state: this.state.time--});
     if (this.state.time <= 0) {
+      this.stop();
       this.props.lifeLost();
       this.props.updateQuestionTracker();
+      this.props.sceneChangeChecker();
       this.props.nextQuestion();
-      this.stop();
       if(this.props.questionTracker !== this.props.currentSet.length){
         this.runTimer();
       }
