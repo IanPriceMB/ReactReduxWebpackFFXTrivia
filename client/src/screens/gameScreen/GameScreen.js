@@ -17,7 +17,7 @@ class GameScreen extends Component {
       currentSet: [],
       currentQuestion: {},
       questionTracker: 0,
-      lives: 5
+      lives: 1
     }
 
     this.sceneChangeChecker = this.sceneChangeChecker.bind(this)
@@ -31,9 +31,15 @@ class GameScreen extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('.answer').addEventListener('click', (e) => {
-      this.choiceClick(e);
-    })
+    var x = document.getElementsByClassName('answer');
+
+    for (let i = 0; i < x.length; i++){
+      x[i].addEventListener('click', (e) => {
+        this.choiceClick(e);
+      })
+    }
+    
+
   }
 
   getObjectKeyIndex = (obj, keyToFind) => {

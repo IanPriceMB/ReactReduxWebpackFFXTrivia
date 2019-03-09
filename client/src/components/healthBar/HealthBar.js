@@ -7,7 +7,7 @@ export const HealthBar = props => {
     livesRemaining.push(i);
   }
   const hearts = livesRemaining.map(life => {
-    return <i key={life} class="fas fa-heart"></i>
+    return <i key={life} className="fas fa-heart"></i>
   });
   return <div>Health Reamaining {hearts}</div>
 }
