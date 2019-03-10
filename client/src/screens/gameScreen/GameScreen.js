@@ -17,7 +17,9 @@ class GameScreen extends Component {
       currentSet: [],
       currentQuestion: {},
       questionTracker: 0,
-      lives: 5
+      lives: 5,
+      auron: false,
+      answerSet: []
     };
 
     this.sceneChangeChecker = this.sceneChangeChecker.bind(this);
@@ -27,17 +29,55 @@ class GameScreen extends Component {
     const path = `${this.props.level}_${this.props.scene}`;
     const currentSet = questionData[path];
     this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
+    
     pubsub.publish('setBackground', 'data');
+
+    this.characterCheck();
   };
 
   componentDidMount() {
+    this.auronCheck();
+    this.assignListeners();
+  };
+
+  characterCheck = () => {
+    for (let i = 0; i < this.props.current.length; i++){
+      if (this.props.current[i] == 'Auron'){
+        this.state.auron = true;
+      };
+    };
+  };
+
+  auronCheck = () => {
+    if(this.state.auron){
+      const set = this.state.currentQuestion.answers;
+      let arr = [];
+      for(let i = 0; i < set.length; i++){
+        if(arr.length < set.length-1 && !set[i].value){
+          arr = [...arr, set[i]]
+        } else if (arr.length == set.length-1 && !set[i].value){
+          // Do nothing
+        } else if (arr.length < set.length-1 && set[i].value){
+          arr = [...arr, set[i]]
+        } else if (arr.length == set.length-1 && set[i].value){
+          arr = [...arr, set[i]]
+          arr.splice(0,1)
+        } 
+      }
+      this.setState({answerSet: arr})
+    } else {
+      this.setState({answerSet: this.state.currentQuestion.answers})
+    }
+  }
+
+  assignListeners = () => {
     var x = document.getElementsByClassName('answer');
     for (let i = 0; i < x.length; i++){
       x[i].addEventListener('click', (e) => {
         this.choiceClick(e);
       });
     };
-  };
+  }
 
   getObjectKeyIndex = (obj, keyToFind) => {
     var i = 0, key;
@@ -64,6 +104,7 @@ class GameScreen extends Component {
     };
     this.sceneChangeChecker();
     this.nextQuestion();
+    this.auronCheck();
   };
 
   // Check if we need to move to the next scene 
@@ -110,14 +151,14 @@ class GameScreen extends Component {
   };
 
   render(){
-    const answers = this.state.currentQuestion.answers.map((answer, i) => {
-      return <div 
+      const answers = this.state.answerSet.map((answer, i) => {
+        return <div 
         key={i} 
         data-value={answer.value} 
         className='answer'>
         {answer.answer}
       </div>
-    });
+      });
     return (
       <Fragment>
         <div className='GameScreen' >
