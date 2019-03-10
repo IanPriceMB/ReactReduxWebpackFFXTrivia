@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import characterData from '../../assets/data/characterData'
 
 class Timer extends Component {
   constructor(props){
@@ -6,11 +7,34 @@ class Timer extends Component {
     
     this.state = {
       time: null,
-      intervalID: null
+      intervalID: null,
+      plusTime: 0,
+      minusTime: 0,
+      chance: false
     }
   }
 
+  componentWillMount() {
+    console.log(this.props)
+    for (let i = 0; i < this.props.party.length; i++){
+      if(this.props.party[i] == 'Tidus'){
+        this.setState({plusTime: this.state.plusTime + 5})
+      }
+      if(this.props.party[i] == 'Auron'){
+        this.setState({minusTime: this.state.minusTime + 5})
+      }
+      if(this.props.party[i] == 'Rikku'){
+        var d = Math.random();
+        if (d <= .1){
+          this.setState({chance: true})
+        }
+      }
+    }
+
+  }
+
   componentDidMount(){
+    console.log(this.state)
     this.runTimer();
     var x = document.getElementsByClassName('answer');
     for (let i = 0; i < x.length; i++){
@@ -22,7 +46,11 @@ class Timer extends Component {
   };
 
   runTimer = () => {
-    this.setState({time: 5});
+    if(this.state.chance){
+      this.setState({time: 10});
+    } else {
+      this.setState({time: (20 + this.state.plusTime - this.state.minusTime)});
+    }
     this.setState({intervalID: setInterval(this.tick, 1000)})
   };
 

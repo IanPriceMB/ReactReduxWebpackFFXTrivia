@@ -123,7 +123,7 @@ class GameScreen extends Component {
         <div className='GameScreen' >
           <Timer 
             lifeLost={this.lifeLost} 
-            party={this.props.party} 
+            party={this.props.current} 
             nextQuestion={this.nextQuestion}
             updateQuestionTracker={this.updateQuestionTracker}
             sceneChangeChecker={this.sceneChangeChecker}
