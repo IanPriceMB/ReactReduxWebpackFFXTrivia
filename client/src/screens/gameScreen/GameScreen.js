@@ -8,6 +8,8 @@ import Timer from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
 import { HealthBar } from '../../components/healthBar/HealthBar';
 import pubsub from 'pubsub-js';
+import { OptionsMenu } from '../../components/optionsMenu/OptionsMenu';
+import { Container } from '../../components/Container/Container';
 
 class GameScreen extends Component {
   constructor(props){
@@ -31,7 +33,6 @@ class GameScreen extends Component {
     this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
 
     pubsub.publish('setBackground', 'data');
-    
   };
 
   componentDidMount() {
@@ -39,7 +40,6 @@ class GameScreen extends Component {
     this.assignListeners();
   };
 
-  // If auron then do auron stuff
   auronCheck = () => {
     if(this.props.current.includes('Auron')){
       const set = this.state.currentQuestion.answers;
@@ -62,46 +62,46 @@ class GameScreen extends Component {
     };
   };
 
-  // Assign click listeners to the answer divs
   assignListeners = async() => {
     const x = await document.getElementsByClassName('answer');
     for(let i in x){
       x[i].addEventListener('click', (e) => {
-        this.choiceClick(e);
+        this.evaluateChoice(e);
       });
     }
   }
 
-  // If no more questions update the leve/scene
-  // When an answer is selected evaluate it for correct/incorrect
-  choiceClick = (e) => {
+  evaluateChoice = (e) => {
     const value = e.target.getAttribute('data-value');
     if (value == 'false') {
       this.lifeLost();
-      if(this.state.lives == 0){
-        this.gameLost();
-      };
     };
-    this.updateQuestionTracker();
-    this.sceneChangeChecker();
-    this.nextQuestion();
+    this.updateGame();
   };
 
   lifeLost = () => {
     const currentLives = this.state.lives;
     const newTotal = currentLives - 1;
-    this.setState({lives: newTotal})
+    this.setState({lives: newTotal});
+    if(this.state.lives == 0){
+      this.gameLost();
+    };
   };
 
+  gameLost = () => {
+    this.props.gameLoss(true);
+    this.props.changeScreen('CutsceneScreen');
+  };
+
+  updateGame = () => {
+    this.updateQuestionTracker();
+    this.sceneChangeChecker();
+    this.nextQuestion();
+  }
+ 
   updateQuestionTracker = () => {
     const next = this.state.questionTracker + 1;
     this.setState({questionTracker: next});
-  };
-
-  nextQuestion = () => {
-    const next = this.state.questionTracker;
-    this.setState({currentQuestion: this.state.currentSet[next]});
-    this.auronCheck();
   };
 
   sceneChangeChecker = () => {
@@ -124,9 +124,10 @@ class GameScreen extends Component {
     };
   };
 
-  gameLost = () => {
-    this.props.gameLoss(true);
-    this.props.changeScreen('CutsceneScreen');
+  nextQuestion = () => {
+    const next = this.state.questionTracker;
+    this.setState({currentQuestion: this.state.currentSet[next]});
+    this.auronCheck();
   };
 
   render(){
@@ -140,19 +141,16 @@ class GameScreen extends Component {
       });
     return (
       <Fragment>
-        <div className='GameScreen' >
-          <Timer 
+        <OptionsMenu></OptionsMenu>
+        <Container>
+        <Timer 
             lifeLost={this.lifeLost} 
-            nextQuestion={this.nextQuestion}
-            updateQuestionTracker={this.updateQuestionTracker}
-            sceneChangeChecker={this.sceneChangeChecker}
-            questionTracker={this.state.questionTracker}
-            currentSet={this.state.currentSet}
+            updateGame={this.updateGame}
           ></Timer>
           <HealthBar remainingLives={this.state.lives}></HealthBar>
-          <div className='question'>{this.state.currentQuestion.question}</div>
+          <h3 className='question'>{this.state.currentQuestion.question}</h3>
           {answers}
-        </div>
+        </Container>
       </Fragment>
     );
   };

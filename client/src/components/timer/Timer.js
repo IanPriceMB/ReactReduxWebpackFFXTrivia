@@ -60,12 +60,8 @@ class Timer extends Component {
     if (this.state.time <= 0) {
       this.stop();
       this.props.lifeLost();
-      this.props.updateQuestionTracker();
-      if(this.props.questionTracker !== this.props.currentSet.length){
-        this.runTimer();
-      };
-      this.props.sceneChangeChecker();
-      this.props.nextQuestion();
+      this.props.updateGame();
+      this.runTimer();
     };
   };
 
