@@ -31,12 +31,10 @@ class Timer extends Component {
   };
 
   // Assign click listeners to the answer divs
-  componentDidMount(){
+  async componentDidMount(){
     this.runTimer();
-    var x = document.getElementsByClassName('answer');
-    console.log(Object.keys(x))
+    var x = await document.getElementsByClassName('answer');
     for (let i = 0; i < x.length; i++){
-      console.log(x[i])
       x[i].addEventListener('click', () => {
         this.stop();
         this.runTimer();

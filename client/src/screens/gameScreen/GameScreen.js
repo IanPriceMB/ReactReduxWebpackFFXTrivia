@@ -63,15 +63,13 @@ class GameScreen extends Component {
   };
 
   // Assign click listeners to the answer divs
-  assignListeners = () => {
-    var x = document.getElementsByClassName('answer');
-    console.log(x)
-    // for (let i = 0; i < x.length; i++){
-    //   console.log(x[i])
-    //   x[i].addEventListener('click', (e) => {
-    //     this.choiceClick(e);
-    //   });
-    // };
+  assignListeners = async() => {
+    const x = await document.getElementsByClassName('answer');
+    for(let i in x){
+      x[i].addEventListener('click', (e) => {
+        this.choiceClick(e);
+      });
+    }
   }
 
   // If no more questions update the leve/scene
