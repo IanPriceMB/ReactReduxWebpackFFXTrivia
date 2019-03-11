@@ -17,7 +17,6 @@ const App = () => {
     setScreen(value)
   }
 
-  console.log(screen)
   return (
     <Provider store={store}>
       <Fragment>

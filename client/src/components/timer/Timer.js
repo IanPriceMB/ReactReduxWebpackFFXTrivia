@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import { connect } from 'react-redux';
 class Timer extends Component {
   constructor(props){
     super(props)
@@ -76,4 +76,8 @@ class Timer extends Component {
   };
 };
 
-export default Timer;
+const mapStateToProps = state => ({
+  party: state.characters.currentCharacters,
+})
+
+export default connect(mapStateToProps, null)(Timer);

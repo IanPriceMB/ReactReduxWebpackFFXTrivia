@@ -5,12 +5,12 @@ import { setCurrentCharacters, setAvailableCharacters } from '../../actions/char
 import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel, gameLoss } from '../../actions/levelActions';
 import levelData from '../../assets/data/levelData';
-import characterPanel from '../../components/characterpanel/CharacterPanel';
+import CharacterPanel from '../../components/characterpanel/CharacterPanel';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
 import background from '../../assets/backgrounds/character_select.jpg';
 import pubsub from 'pubsub-js';
-import {Button} from '../../components/Button/Button';
-import {Container} from '../../components/Container/Container';
+import { Button } from '../../components/Button/Button';
+import { Container } from '../../components/Container/Container';
 
 class CharacterSelectScreen extends Component{
   constructor(props){
@@ -123,9 +123,9 @@ class CharacterSelectScreen extends Component{
   }
 
   render() {
-    const characters = props.available.map((character, i) => {
-      return <CharacterPanel character={character} key={i} updateChosen={props.updateChosen}/>
-  });
+    const characters = this.props.available.map((character, i) => {
+      return <CharacterPanel character={character} key={i} updateChosen={this.updateChosen}/>
+    });
     return (
       <Fragment>
         {this.state.proceed != null ? this.state.proceed: null}
