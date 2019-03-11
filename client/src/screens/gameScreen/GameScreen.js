@@ -83,7 +83,7 @@ class GameScreen extends Component {
     const currentLives = this.state.lives;
     const newTotal = currentLives - 1;
     this.setState({lives: newTotal});
-    if(this.state.lives == 0){
+    if(newTotal == 0){
       this.gameLost();
     };
   };
