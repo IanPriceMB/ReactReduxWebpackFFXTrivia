@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import levelData from '../../assets/data/levelData';
 import pubsub from 'pubsub-js';
+import {Button} from '../../components/Button/Button';
 
 class CutsceneScreen extends Component {
   constructor (props){
@@ -62,7 +63,7 @@ class CutsceneScreen extends Component {
     return (
       <Fragment>
         {this.state.lazy || <div className="loader"></div>}
-        <button className='skipButton' onClick={this.endScene}>Skip</button>
+        <Button onClick={this.endScene}>Skip</Button>
       </Fragment>
     )
   }

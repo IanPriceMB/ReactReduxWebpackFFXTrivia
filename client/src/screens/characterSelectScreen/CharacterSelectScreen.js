@@ -5,10 +5,12 @@ import { setCurrentCharacters, setAvailableCharacters } from '../../actions/char
 import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel, gameLoss } from '../../actions/levelActions';
 import levelData from '../../assets/data/levelData';
-import {CharacterSelectMenu} from '../../components/characterSelect/CharacterSelectMenu';
+import characterPanel from '../../components/characterpanel/CharacterPanel';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
 import background from '../../assets/backgrounds/character_select.jpg';
 import pubsub from 'pubsub-js';
+import {Button} from '../../components/Button/Button';
+import {Container} from '../../components/Container/Container';
 
 class CharacterSelectScreen extends Component{
   constructor(props){
@@ -121,24 +123,20 @@ class CharacterSelectScreen extends Component{
   }
 
   render() {
+    const characters = props.available.map((character, i) => {
+      return <CharacterPanel character={character} key={i} updateChosen={props.updateChosen}/>
+  });
     return (
       <Fragment>
         {this.state.proceed != null ? this.state.proceed: null}
         <OptionsMenu></OptionsMenu>
-        <div className='characterSelectScreen'>
-          <h1 className='characterSelectScreen__title'>
+          <h1 className='title'>
             Chose Up to 3 Characters ({this.state.chosen.length})
           </h1>
-          <CharacterSelectMenu 
-            pickable={this.props.available} 
-            updateChosen={this.updateChosen}>
-          </CharacterSelectMenu>
-          <button>
-            <h3 onClick={this.startGame}>
-              Let's Go!
-            </h3>
-          </button>
-        </div>
+          <Container>
+            {characters}
+            <Button onClick={this.startGame}>Let's Go!</Button>
+          </Container>
       </Fragment>
     )
   }

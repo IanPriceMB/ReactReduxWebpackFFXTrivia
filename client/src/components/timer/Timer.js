@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import characterData from '../../assets/data/characterData'
 
 class Timer extends Component {
   constructor(props){
@@ -11,31 +10,33 @@ class Timer extends Component {
       plusTime: 0,
       minusTime: 0,
       chance: false
-    }
-  }
+    };
+  };
 
+  // Check for any characters that effect timer state 
+  // Then enable their effects if so
   componentWillMount() {
-    for (let i = 0; i < this.props.party.length; i++){
-      if(this.props.party[i] == 'Tidus'){
-        this.setState({plusTime: this.state.plusTime + 5})
-      }
-      if(this.props.party[i] == 'Auron'){
-        this.setState({minusTime: this.state.minusTime + 5})
-      }
-      if(this.props.party[i] == 'Rikku'){
-        var d = Math.random();
-        if (d <= .1){
-          this.setState({chance: true})
-        }
-      }
-    }
+    if(this.props.party.includes('Tidus')){
+      this.setState({plusTime: this.state.plusTime + 5})
+    };
+    if(this.props.party.includes('Auron')){
+      this.setState({minusTime: this.state.minusTime + 5})
+    };
+    if(this.props.party.includes('Rikku')){
+      var d = Math.random();
+      if (d <= .1){
+        this.setState({chance: true})
+      };
+    };
+  };
 
-  }
-
+  // Assign click listeners to the answer divs
   componentDidMount(){
     this.runTimer();
     var x = document.getElementsByClassName('answer');
+    console.log(Object.keys(x))
     for (let i = 0; i < x.length; i++){
+      console.log(x[i])
       x[i].addEventListener('click', () => {
         this.stop();
         this.runTimer();
@@ -48,8 +49,8 @@ class Timer extends Component {
       this.setState({time: 10});
     } else {
       this.setState({time: (5 + this.state.plusTime - this.state.minusTime)});
-    }
-    this.setState({intervalID: setInterval(this.tick, 1000)})
+    };
+    this.setState({intervalID: setInterval(this.tick, 1000)});
   };
 
   stop = () => {
@@ -64,16 +65,15 @@ class Timer extends Component {
       this.props.updateQuestionTracker();
       if(this.props.questionTracker !== this.props.currentSet.length){
         this.runTimer();
-      }
+      };
       this.props.sceneChangeChecker();
       this.props.nextQuestion();
-    } 
+    };
   };
 
   render(){
     return <div>{this.state.time}</div>
-  }
-
-}
+  };
+};
 
 export default Timer;

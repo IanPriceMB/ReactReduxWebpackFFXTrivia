@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {useState, Fragment} from 'react';
 import './App.scss';
 import CharacterSelectScreen from '../screens/characterSelectScreen/CharacterSelectScreen';
 import CutsceneScreen from '../screens/cutsceneScreen/CutsceneScreen';
@@ -10,38 +10,38 @@ import store from '../store';
 import MusicPlayer from './music/MusicPlayer';
 import Background from '../components/background/Background';
 
-class App extends Component {
-  state = {screen: 'SplashScreen'};
-
-  changeScreen = (value) =>{
-    this.setState({screen: value})
+const App = () => {
+  const [screen, setScreen] = useState('SplashScreen');
+  
+  const changeScreen = value =>{
+    setScreen(value)
   }
 
-  render(){
-    return (
-      <Provider store={store}>
-        <Fragment>
-          <MusicPlayer></MusicPlayer>
-          { this.state.screen == 'SplashScreen'?(
-            <SplashScreen changeScreen={this.changeScreen}></SplashScreen> 
-          ):(null)} 
-          {this.state.screen == 'MainMenuScreen'?(
-            <MainMenuScreen changeScreen={this.changeScreen}></MainMenuScreen>
-          ):(null)} 
-          {this.state.screen == 'GameScreen'?(
-            <GameScreen changeScreen={this.changeScreen}></GameScreen>
-          ):(null)} 
-          {this.state.screen == 'CutsceneScreen'?(
-            <CutsceneScreen  changeScreen={this.changeScreen}></CutsceneScreen>
-          ):(null)} 
-          {this.state.screen == 'CharacterSelectScreen'?(
-            <CharacterSelectScreen changeScreen={this.changeScreen}></CharacterSelectScreen>
-          ):(null)}
-          <Background></Background>
-        </Fragment>
-      </Provider>
-    );
-  };
+  console.log(screen)
+  return (
+    <Provider store={store}>
+      <Fragment>
+        <MusicPlayer></MusicPlayer>
+        <Background></Background>
+        {
+          screen == 'SplashScreen' ? (
+            <SplashScreen changeScreen={changeScreen}></SplashScreen> 
+          ): screen == 'MainMenuScreen' ? (
+            <MainMenuScreen changeScreen={changeScreen}></MainMenuScreen>
+          ):screen == 'CutsceneScreen' ? (
+            <CutsceneScreen  changeScreen={changeScreen}></CutsceneScreen>
+          ):screen == 'CharacterSelectScreen' ? (
+            <CharacterSelectScreen changeScreen={changeScreen}></CharacterSelectScreen>
+          ):screen == 'GameScreen' ? (
+            <GameScreen changeScreen={changeScreen}></GameScreen>
+          ):
+          (
+            null
+          )
+        } 
+      </Fragment>
+    </Provider>
+  );
 };
 
 export default App;

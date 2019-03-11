@@ -1,25 +1,29 @@
 // A simple splash page 
 
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './SplashScreen.scss';
-
+import { Button } from '../../components/Button/Button';
+import { Container } from '../../components/Container/Container';
 import pubsub from 'pubsub-js';
 
-const SplashScreen = (props) => {
+const SplashScreen = props => {
 
   useEffect(() => {
-    pubsub.publish('playMusic');
+    pubsub.publish('playMusic', 'MainMenu');
   },[]);
 
   return (
-      <div className='splash'>
-        <h1 className='splash__title'>Final Fantasy X Trivia</h1>
-        <h3 className='splash__subtitle'>Created by Ian Price</h3>
-        <button className='splash__button' onClick={props.changeScreen.bind(this,'MainMenuScreen')}>
-          <h2 className='splash__button__text'>Blitz Off!</h2>
-        </button>
-      </div>
+    <Container>
+        <h1 className='title'>Final Fantasy X Trivia</h1>
+        <h3 className='subtitle'>Created by Ian Price</h3>
+        <Button onClick={() => props.changeScreen('MainMenuScreen')}>Blitz Off!</Button>
+    </Container>
   );
+};
+
+SplashScreen.propTypes = {
+  changeScreen: PropTypes.func.isRequired
 };
 
 export default SplashScreen;

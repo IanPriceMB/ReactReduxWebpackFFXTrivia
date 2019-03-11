@@ -1,1 +1,13 @@
 // This file contains the styles for the Background
+.background{
+  background-image: url('../../assets/backgrounds/mainScreen.png');
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}

@@ -1,49 +1,32 @@
+// This positions and styles the splash screen menu
+.splash {  
+  background-color: rgba(0, 0, 128, .7);
+  border: 1px solid black;
+  border-radius: 20px;
+  color: white;
+  padding: 20px;
+  text-align: center;
 
-@media only screen and (min-width: 1080px) {
-  // Set's the background image for the game to the menu screen image
-  .background{
-    background-image: url('../../assets/backgrounds/mainScreen.png');
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-size: cover;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: -1;
+  &__title {
+    font-size: 3em;
+    margin: 0;
   }
 
-  // This positions and styles the splash screen menu
-  .splash {  
-    background-color: rgba(0, 0, 128, .7);
-    border: 1px solid black;
+  &__subtitle {
+    font-size: 2em;
+  }
+
+  &__button {
+    background-color: black;
+    border: solid white;
     border-radius: 20px;
     color: white;
-    padding: 20px;
-    text-align: center;
+    cursor: pointer;
+    font-size: 3em;
+    width: 80%;
 
-    &__title {
-      font-size: 3em;
-      margin: 0;
-    }
-
-    &__subtitle {
-      font-size: 2em;
-    }
-
-    &__button {
-      background-color: black;
-      border: solid white;
-      border-radius: 20px;
-      color: white;
-      cursor: pointer;
-      font-size: 3em;
-      width: 80%;
-
-      &__text{
-        margin: 10px;
-      }
+    &__text{
+      margin: 10px;
     }
   }
 }

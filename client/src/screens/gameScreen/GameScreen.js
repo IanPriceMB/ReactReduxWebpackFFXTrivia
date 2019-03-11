@@ -16,10 +16,10 @@ class GameScreen extends Component {
     this.state ={
       currentSet: [],
       currentQuestion: {},
+      answerSet: [],
       questionTracker: 0,
       lives: 5,
-      auron: false,
-      answerSet: []
+      auron: false
     };
 
     this.sceneChangeChecker = this.sceneChangeChecker.bind(this);
@@ -29,10 +29,9 @@ class GameScreen extends Component {
     const path = `${this.props.level}_${this.props.scene}`;
     const currentSet = questionData[path];
     this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
-    
-    pubsub.publish('setBackground', 'data');
 
-    this.characterCheck();
+    pubsub.publish('setBackground', 'data');
+    
   };
 
   componentDidMount() {
@@ -40,87 +39,54 @@ class GameScreen extends Component {
     this.assignListeners();
   };
 
-  characterCheck = () => {
-    for (let i = 0; i < this.props.current.length; i++){
-      if (this.props.current[i] == 'Auron'){
-        this.state.auron = true;
-      };
-    };
-  };
-
+  // If auron then do auron stuff
   auronCheck = () => {
-    if(this.state.auron){
+    if(this.props.current.includes('Auron')){
       const set = this.state.currentQuestion.answers;
       let arr = [];
       for(let i = 0; i < set.length; i++){
         if(arr.length < set.length-1 && !set[i].value){
-          arr = [...arr, set[i]]
+          arr = [...arr, set[i]];
         } else if (arr.length == set.length-1 && !set[i].value){
           // Do nothing
         } else if (arr.length < set.length-1 && set[i].value){
-          arr = [...arr, set[i]]
+          arr = [...arr, set[i]];
         } else if (arr.length == set.length-1 && set[i].value){
-          arr = [...arr, set[i]]
-          arr.splice(0,1)
-        } 
-      }
+          arr = [...arr, set[i]];
+          arr.splice(0,1);
+        }; 
+      };
       this.setState({answerSet: arr})
     } else {
       this.setState({answerSet: this.state.currentQuestion.answers})
-    }
-  }
+    };
+  };
 
+  // Assign click listeners to the answer divs
   assignListeners = () => {
     var x = document.getElementsByClassName('answer');
-    for (let i = 0; i < x.length; i++){
-      x[i].addEventListener('click', (e) => {
-        this.choiceClick(e);
-      });
-    };
+    console.log(x)
+    // for (let i = 0; i < x.length; i++){
+    //   console.log(x[i])
+    //   x[i].addEventListener('click', (e) => {
+    //     this.choiceClick(e);
+    //   });
+    // };
   }
-
-  getObjectKeyIndex = (obj, keyToFind) => {
-    var i = 0, key;
-    for (key in obj) {
-        if (key == keyToFind) {
-            return i;
-        }
-        i++;
-    }
-    return null;
-  };
 
   // If no more questions update the leve/scene
   // When an answer is selected evaluate it for correct/incorrect
   choiceClick = (e) => {
-    // If not at the end of questions update player health and render next question
     const value = e.target.getAttribute('data-value');
-    this.updateQuestionTracker();
     if (value == 'false') {
       this.lifeLost();
       if(this.state.lives == 0){
         this.gameLost();
       };
     };
+    this.updateQuestionTracker();
     this.sceneChangeChecker();
     this.nextQuestion();
-    this.auronCheck();
-  };
-
-  // Check if we need to move to the next scene 
-  // If yes hit redux with the dispatch
-  nextScene = () => {
-    try {
-      Object.keys(levelData[this.props.level].cutscenes).forEach(scene => {
-        if(!levelData[this.props.level].cutscenes[scene].finished){
-          this.props.setCutscene(scene);
-          this.props.changeScreen('CutsceneScreen');
-          throw 'BreakException';
-        };
-      });
-    } catch (e) {
-      if (e !== 'BreakException') throw e;
-    };
   };
 
   lifeLost = () => {
@@ -137,11 +103,26 @@ class GameScreen extends Component {
   nextQuestion = () => {
     const next = this.state.questionTracker;
     this.setState({currentQuestion: this.state.currentSet[next]});
+    this.auronCheck();
   };
 
   sceneChangeChecker = () => {
     if(this.state.questionTracker == this.state.currentSet.length){
       this.nextScene();
+    };
+  };
+
+  nextScene = () => {
+    try {
+      Object.keys(levelData[this.props.level].cutscenes).forEach(scene => {
+        if(!levelData[this.props.level].cutscenes[scene].finished){
+          this.props.setCutscene(scene);
+          this.props.changeScreen('CutsceneScreen');
+          throw 'BreakException';
+        };
+      });
+    } catch (e) {
+      if (e !== 'BreakException') throw e;
     };
   };
 

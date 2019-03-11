@@ -1,44 +1,35 @@
 // The main menu controls the initial flow of the application
 // loggin in/ signing up allows for save states!
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './MainMenuScreen.scss';
 import { connect } from 'react-redux';
+import pubsub from 'pubsub-js'
 import { setLevel } from '../../actions/levelActions';
 import { setCutscene } from '../../actions/cutsceneActions';
+import { Button } from '../../components/Button/Button';
+import { Container } from '../../components/Container/Container';
 
-class MainMenuScreen extends Component {
-  constructor (props){
-    super(props);
+const MainMenuScreen = props => {
 
-  };
-
-  componentDidMount(){
-    var mp = document.querySelector('audio');
-    var src = mp.getElementsByTagName('source');
-    var song = src[0].getAttribute('src');
-
-    if(song !== '9057516a2133e81478ebe677bcba97cf.mp3'){
-      song = '9057516a2133e81478ebe677bcba97cf.mp3';
-    }
-  };
+  useEffect(() => {
+    pubsub.publish('playMusic', 'MainMenu');
+  },[]);
   
   // Set Redux state to a new game state
-  newGame = () => {
-    this.props.setLevel('new_game');
-    this.props.setCutscene('scene_final')
-    this.props.changeScreen('CutsceneScreen');
+  const newGame = () => {
+    props.setLevel('new_game');
+    props.setCutscene('scene_final')
+    props.changeScreen('CutsceneScreen');
   };
 
-  render() {
-    return (
-        <div className='container'>
-          <button onClick={this.newGame}><h2>New Game</h2></button>
-          <button disabled={true}><h2>Log In</h2></button>
-          <button disabled={true}><h2>Sign Up</h2></button>
-        </div>
-    );
-  };
+  return (
+    <Container>
+      <Button onClick={newGame}>New Game</Button>
+      <Button>Log In</Button>
+      <Button>Sign UP</Button>
+    </Container>
+  );
 };
 
 MainMenuScreen.propTypes = {
