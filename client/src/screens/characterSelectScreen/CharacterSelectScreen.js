@@ -82,14 +82,8 @@ class CharacterSelectScreen extends Component{
     this.props.setAvailableCharacters(availableCharacters);
   };
 
-  async componentDidMount(){
+  componentDidMount(){
     pubsub.publish('playMusic');
-
-    try{
-
-    } catch (err){
-
-    }
   };
 
 
@@ -101,27 +95,18 @@ class CharacterSelectScreen extends Component{
 
     // If 3 characters have already been chosen
     if(this.state.chosen.length == 3){
-      document.getElementById(this.state.chosen[0]).setAttribute('data-chosen', "true");
-      document.getElementById(this.state.chosen[0]).style.borderColor = 'rgb(0, 0, 202)';
-
+      document.getElementById(this.state.chosen[0]).setAttribute('data-chosen', "false");
       const byebye = this.state.chosen.splice(0,1);
       this.setState({chosen: [...byebye, character]});
-
-      characterPanel.style.borderColor = 'aqua';
       characterPanel.setAttribute('data-chosen', "true");
 
     } else if(value === "false"){
       this.setState({chosen: [...this.state.chosen, character]});
-
-      characterPanel.style.borderColor = 'aqua';
       characterPanel.setAttribute('data-chosen', "true");
 
     } else if (value === "true") {
       const unchosen = this.state.chosen.filter((chosenChar) => character !== chosenChar);
-
       this.setState({chosen: unchosen});
-
-      characterPanel.style.borderColor = 'rgb(0, 0, 202)';
       characterPanel.setAttribute('data-chosen', "false");
     };
   };
