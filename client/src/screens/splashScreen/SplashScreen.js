@@ -17,7 +17,7 @@ import OptionsMenu from '../../components/optionsMenu/OptionsMenu';
 
 
 const SplashScreen = props => {
-
+  
   // React hook, the empty arry is so that it only runs on load
   useEffect(() => {
     pubsub.publish('playMusic', 'MainMenu');
@@ -36,7 +36,7 @@ const SplashScreen = props => {
   );
 };
 
-// The component requires a changescreen function to run so it is stuck in PropTypes
+// Declareing which proptypes should be present 
 SplashScreen.propTypes = {
   changeScreen: PropTypes.func.isRequired
 };

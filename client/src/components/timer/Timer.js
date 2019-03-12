@@ -2,9 +2,7 @@
 
 // Importing everything we need to make this a pretty react component
 import React, { Component } from 'react';
-
-// Connect for Redux state
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 
 class Timer extends Component {
@@ -76,10 +74,15 @@ class Timer extends Component {
   };
 };
 
-const mapStateToProps = state => ({
-  party: state.characters.currentCharacters,
-})
+
+// Declareing which proptypes should be present 
+Timer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  lifeLost: PropTypes.func.isRequired,
+  updateGame: PropTypes.func.isRequired,
+  party: PropTypes.array.isRequired
+};
 
 
-// Export the timer connected to Redux state
-export default connect(mapStateToProps, null)(Timer);
+// Export the timer 
+export default Timer;

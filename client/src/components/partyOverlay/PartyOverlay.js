@@ -3,10 +3,7 @@
 // Importing everything we need to make this a pretty react component
 import React from 'react';
 import './PartyOverlay.scss'
-
-
-// For connecting to Redux state
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 
 // Loading any images we may need
@@ -21,8 +18,8 @@ import Kimahri from '../../assets/characters/Kimahri.png';
 
 const PartyOverlay = props => {
 
-  const levelTitle = props.level.split('_');
-  console.log(levelTitle);
+  const levelTitle = props.level.split('_')[0];
+
   return (
     <div className='partyOverlay'>
       <h1>{levelTitle}</h1>
@@ -42,11 +39,13 @@ const PartyOverlay = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  current: state.characters.currentCharacters,
-  level: state.level.currentLevel
-});
+
+// Declareing which proptypes should be present 
+PartyOverlay.propTypes = {
+  party: PropTypes.array.isRequired,
+  level: PropTypes.string.isRequired
+};
 
 
-// Export the overlay connected to Redux State
-export default connect(mapStateToProps, null)(PartyOverlay)
+// Export the overlay template
+export default PartyOverlay;

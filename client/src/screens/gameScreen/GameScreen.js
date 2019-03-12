@@ -170,12 +170,13 @@ class GameScreen extends Component {
         <Timer 
             lifeLost={this.lifeLost} 
             updateGame={this.updateGame}
+            party={this.props.current}
           ></Timer>
           <HealthBar remainingLives={this.state.lives}></HealthBar>
           <h3 className='question'>{this.state.currentQuestion.question}</h3>
           {answers}
         </Container>
-        <PartyOverlay></PartyOverlay>
+        <PartyOverlay level={this.props.level} party={this.props.current}></PartyOverlay>
       </Fragment>
     );
   };

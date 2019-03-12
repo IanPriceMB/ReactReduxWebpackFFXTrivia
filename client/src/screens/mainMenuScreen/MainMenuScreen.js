@@ -22,7 +22,7 @@ const MainMenuScreen = props => {
   // Set Redux state to a new game state
   const newGame = () => {
     props.setLevel('new_game');
-    props.setCutscene('scene_final')
+    props.setCutscene('scene_final');
     props.changeScreen('CutsceneScreen');
   };
 

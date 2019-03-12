@@ -8,6 +8,9 @@ import React, { Component } from 'react';
 import pubsub from 'pubsub-js';
 
 
+// Music for the initial load
+import music from '../../assets/music/MainMenu.mp3';
+
 class MusicPlayer extends Component {
   constructor(props){
     super(props);

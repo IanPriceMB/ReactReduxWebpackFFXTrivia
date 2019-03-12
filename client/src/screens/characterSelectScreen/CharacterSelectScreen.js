@@ -10,7 +10,7 @@
 // Importing everything we need to make this a pretty react component
 import React, {Component, Fragment} from 'react';
 import './CharacterSelectScreen.scss';
-
+import PropTypes from 'prop-types';
 
 // For connecting to Redux state
 import { connect } from 'react-redux';
@@ -29,7 +29,6 @@ import levelData from '../../assets/data/levelData';
 // All the components we need to build the page
 import CharacterPanel from '../../components/characterpanel/CharacterPanel';
 import OptionsMenu from '../../components/optionsMenu/OptionsMenu';
-import background from '../../assets/backgrounds/character_select.jpg';
 import Button from '../../components/button/Button';
 import Container from '../../components/container/Container';
 
@@ -48,20 +47,10 @@ class CharacterSelectScreen extends Component{
   componentWillMount(){
     this.props.gameLoss(false);
 
-    // If this is the first or last scene in a level check and make sure the pre/post emptive
-    // cutscene has been played
-    const regexOne = /\_one$/;
     const regexFinal = /\_final$/;
 
-    if (regexOne.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
-      this.setAvailableCharacters();
-    }
-    // If not final or first and the cutscene is finished
-    else if (!regexFinal.test(this.props.scene) && !regexOne.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
-      this.setAvailableCharacters();
-    } 
-    // If it is the final scene and it has already been played update the level and scene to be the next level scene one
-    else if (regexFinal.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
+    // If it is the final scene and it has already been played update the level and scene to be the next level, scene one
+    if (regexFinal.test(this.props.scene) && levelData[this.props.level].cutscenes[this.props.scene].finished){
       const levels = Object.keys(levelData);
       let nextLevel;
       for (let i = 0; i < levels.length; i++){
@@ -73,7 +62,9 @@ class CharacterSelectScreen extends Component{
       this.props.setLevel(nextLevel);
       this.props.setCutscene('scene_one');
       this.props.changeScreen('CutsceneScreen');
-    };
+    } else {
+      this.setAvailableCharacters();
+    }
   };
 
   setAvailableCharacters = () => {
@@ -81,9 +72,14 @@ class CharacterSelectScreen extends Component{
     this.props.setAvailableCharacters(availableCharacters);
   };
 
-  componentDidMount(){
-    pubsub.publish('setBackground');
+  async componentDidMount(){
     pubsub.publish('playMusic');
+
+    try{
+
+    } catch (err){
+
+    }
   };
 
 
@@ -104,8 +100,7 @@ class CharacterSelectScreen extends Component{
       characterPanel.style.borderColor = 'aqua';
       characterPanel.setAttribute('data-chosen', "true");
 
-    }
-    else if(value === "false"){
+    } else if(value === "false"){
       this.setState({chosen: [...this.state.chosen, character]});
 
       characterPanel.style.borderColor = 'aqua';
@@ -118,7 +113,7 @@ class CharacterSelectScreen extends Component{
 
       characterPanel.style.borderColor = 'rgb(0, 0, 202)';
       characterPanel.setAttribute('data-chosen', "false");
-    } ;
+    };
   };
 
   // Sets the game screen and sets the chosen characters to Redux state
@@ -159,9 +154,18 @@ class CharacterSelectScreen extends Component{
   };
 };
 
-// Demonstrates all proptypes requreid for the compoent to run
+// Declareing which proptypes should be present 
 CharacterSelectScreen.propTypes = {
-
+  changeScreen: PropTypes.func.isRequired,
+  setLevel: PropTypes.func.isRequired,
+  setCutscene: PropTypes.func.isRequired,
+  setAvailableCharacters: PropTypes.func.isRequired,
+  setCurrentCharacters: PropTypes.func.isRequired,
+  gameLoss: PropTypes.func.isRequired,
+  available: PropTypes.array.isRequired,
+  current: PropTypes.array.isRequired,
+  level: PropTypes.string.isRequired, 
+  scene: PropTypes.string.isRequired, 
 };
 
 

@@ -3,6 +3,7 @@
 // Importing everything we need to make this a pretty react component
 import React from 'react';
 import './OptionsMenu.scss';
+import PropTypes from 'prop-types';
 
 const OptionsMenu = () => 
   {
@@ -15,6 +16,12 @@ const OptionsMenu = () =>
       </ul>
     </div>
   );
+};
+
+
+// Declareing which proptypes should be present 
+OptionsMenu.propTypes = {
+
 };
 
 

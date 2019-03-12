@@ -3,14 +3,14 @@
 // Importing everything we need to make this a pretty react component
 import React from 'react';
 import './CharacterPanel.scss';
+import PropTypes from 'prop-types';
 
 
 //Data for the characters is located in a seperate file for clarity of reference
 import characterData from '../../assets/data/characterData';
 
 
-// Load all the pictures that might be nessessary for this file 
-// There is definately a better way of doing this
+// Load all the pictures that might be nessessary the character panels
 import Tidus from '../../assets/characters/Tidus.png';
 import Auron from '../../assets/characters/Auron.png';
 import Wakka from '../../assets/characters/Wakka.png';
@@ -21,6 +21,7 @@ import Kimahri from '../../assets/characters/Kimahri.png';
 
 
 const CharacterPanel = props => {
+  console.log(props)
   return (
     <div className='characterPanel' id={props.character} data-chosen={false} onClick={() => props.updateChosen(props.character)}>
       <div className='media'>
@@ -56,6 +57,15 @@ const CharacterPanel = props => {
     </div>
   );
 };
+
+
+// Declareing which proptypes should be present 
+CharacterPanel.propTypes = {
+  changeScreen: PropTypes.func.isRequired,
+  setLevel: PropTypes.func.isRequired,
+  setCutscene: PropTypes.func.isRequired
+};
+
 
 
 // Export the template

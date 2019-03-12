@@ -78,7 +78,12 @@ class CutsceneScreen extends Component {
 
 // Declare all the props expceted for this screen
 CutsceneScreen.propTypes = {
-  changeScreen: PropTypes.func.isRequired
+  changeScreen: PropTypes.func.isRequired, 
+  changeScreen: PropTypes.func.isRequired, 
+  dispatch: PropTypes.func.isRequired, 
+  level: PropTypes.string.isRequired,
+  scene: PropTypes.string.isRequired, 
+  loss: PropTypes.bool.isRequired
 };
 
 
