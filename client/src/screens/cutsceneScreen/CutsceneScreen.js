@@ -52,7 +52,9 @@ class CutsceneScreen extends Component {
         document.getElementById('video').addEventListener('ended', this.endScene, false);
       } catch(err) {
         this.setState({lazy: <div>{`Failed to load component: ${err}`}</div>});
-        //Do something so game doesn't just soft lock here
+        setTimeout(() => {
+          this.endScene();
+        }, 3000)
       };
     };
   };
