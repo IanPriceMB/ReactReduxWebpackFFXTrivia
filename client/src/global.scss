@@ -2,7 +2,7 @@ $colors: (
   mainMenu-Primary: rgba(0, 0, 178, 0.2),
   mainMenu-Light: lighten(#0000b2, 40%),
   mainMenu-Accent: white,
-  mainMenu-Button: rgba(120, 143, 20, 0.5),
+  mainMenu-Button: rgba(166, 196, 32, 0.5),
 
   zanarkandPrimary: red, 
   zanarkandAccent: red, 
@@ -20,11 +20,11 @@ $colors: (
   }
 }
 
-// @mixin m425 {
-//   @media (min-width: 425px) {
-//     @content;
-//   }
-// }
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
 
 // @mixin m425 {
 //   @media (min-width: 1024px) {

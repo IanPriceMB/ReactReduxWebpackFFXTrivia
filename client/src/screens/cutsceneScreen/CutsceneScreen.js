@@ -71,7 +71,7 @@ class CutsceneScreen extends Component {
     return (
       <Fragment>
         {this.state.lazy || <div className="loader"></div>}
-        <Button onClick={this.endScene}>Skip</Button>
+        <Button className='skipButton' onClick={this.endScene}>Skip</Button>
       </Fragment>
     );
   };

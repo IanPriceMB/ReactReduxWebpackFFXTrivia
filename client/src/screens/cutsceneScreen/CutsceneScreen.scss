@@ -16,3 +16,17 @@
   height: 100%;
   background-color: black;
 }
+
+.skipButton{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 15% !important;
+  font-size: 1em !important;
+  border-radius: 0 !important;
+  border-style: none !important;
+  margin: 0 !important;
+  text-decoration: underline;
+  background-color: rgb(36, 36, 36);
+  color: rgb(199, 199, 199);
+}
