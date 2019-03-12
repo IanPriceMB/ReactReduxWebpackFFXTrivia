@@ -12,9 +12,6 @@ import pubsub from 'pubsub-js';
 import music from '../../assets/music/MainMenu.mp3';
 
 class MusicPlayer extends Component {
-  constructor(props){
-    super(props);
-  };
 
   // Before the componenet mounts set up the pubsub listeners
   componentWillMount(){

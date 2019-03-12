@@ -21,7 +21,6 @@ import Kimahri from '../../assets/characters/Kimahri.png';
 
 
 const CharacterPanel = props => {
-  console.log(props)
   return (
     <div className='characterPanel' id={props.character} data-chosen={false} onClick={() => props.updateChosen(props.character)}>
       <div className='media'>
@@ -61,9 +60,8 @@ const CharacterPanel = props => {
 
 // Declareing which proptypes should be present 
 CharacterPanel.propTypes = {
-  changeScreen: PropTypes.func.isRequired,
-  setLevel: PropTypes.func.isRequired,
-  setCutscene: PropTypes.func.isRequired
+  character: PropTypes.string.isRequired,
+  updateChosen: PropTypes.func.isRequired
 };
 
 

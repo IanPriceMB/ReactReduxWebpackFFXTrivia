@@ -49,6 +49,7 @@ class GameScreen extends Component {
   // Before the component mounts we need to get the proper question data
   // Also set the background image
   componentWillMount(){
+    console.log(this.props)
     const path = `${this.props.level}_${this.props.scene}`;
     const currentSet = questionData[path];
     this.setState({currentSet, currentQuestion: currentSet[this.state.questionTracker]});
@@ -181,6 +182,20 @@ class GameScreen extends Component {
     );
   };
 };
+
+
+// Declareing which proptypes should be present 
+GameScreen.propTypes = {
+  changeScreen: PropTypes.func.isRequired,
+  setLevel: PropTypes.func.isRequired,
+  setCutscene: PropTypes.func.isRequired,
+  gameLoss: PropTypes.func.isRequired,
+  available: PropTypes.array.isRequired,
+  current: PropTypes.array.isRequired,
+  level: PropTypes.string.isRequired, 
+  scene: PropTypes.string.isRequired, 
+};
+
 
 
 // Declare the expected proptypes for this screen to run

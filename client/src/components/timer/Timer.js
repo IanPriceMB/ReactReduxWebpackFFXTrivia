@@ -77,7 +77,6 @@ class Timer extends Component {
 
 // Declareing which proptypes should be present 
 Timer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   lifeLost: PropTypes.func.isRequired,
   updateGame: PropTypes.func.isRequired,
   party: PropTypes.array.isRequired

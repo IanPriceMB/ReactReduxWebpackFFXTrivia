@@ -2,15 +2,19 @@
 
 // Importing everything we need to make this a pretty react component
 import React, { Component } from 'react';
-import  {connect } from 'react-redux';
 import './Background.scss';
+import PropTypes from 'prop-types';
+
+
+// For connecting to Redux state
+import  { connect } from 'react-redux';
 
 
 // Pubsub is for controling when an image is changed
 import pubsub from 'pubsub-js';
 
 
-class Background extends Component{
+class Background extends Component {
 
   // Before load set up our listeners for the pub sub
   componentWillMount() {
@@ -24,21 +28,29 @@ class Background extends Component{
     try {
       const background = await import(`../../assets/backgrounds/${this.props.level}_${this.props.scene}.png`);
       document.getElementById('background').style.backgroundImage = `url('${background.default}')`;
-    }catch(err) {
+    } catch(err) {
       console.log(err);
-    } 
-  }
+    };
+  };
 
   // If background is taken off the screen we unsub to avoid memory leaks
   componentWillUnmount() {
     pubsub.unsubscribe(pubsub_setBackground);
-  }
+  };
 
   // Render out component to the screen
   render(){
     return <div className='background' id='background'></div>
-  }
-}
+  };
+};
+
+// Declareing which proptypes should be present 
+Background.propTypes = {
+  level: PropTypes.string.isRequired,
+  scene: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
 
 // Get the information this component needs from Redux state and set it to props
 const mapStateToProps = state => ({
