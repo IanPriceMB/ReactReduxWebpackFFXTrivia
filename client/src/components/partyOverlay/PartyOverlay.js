@@ -20,21 +20,24 @@ const PartyOverlay = props => {
 
   const levelTitle = props.level.split('_')[0];
 
+  const pictures = props.party.map(member => {
+    return <img className='picture'
+      src={ 
+        member == 'Tidus' ? Tidus: 
+        member == 'Auron' ? Auron:
+        member == 'Wakka' ? Wakka:
+        member == 'Lulu' ? Lulu:
+        member == 'Yuna' ? Yuna:
+        member == 'Rikku' ? Rikku:
+        member == 'Kimahri' ? Kimahri: 
+        null} 
+      alt={member} 
+    />
+  })
   return (
     <div className='partyOverlay'>
       <h1>{levelTitle}</h1>
-      <img className='picture'
-      src={ 
-        props.character == 'Tidus' ? Tidus: 
-        props.character == 'Auron' ? Auron:
-        props.character == 'Wakka' ? Wakka:
-        props.character == 'Lulu' ? Lulu:
-        props.character == 'Yuna' ? Yuna:
-        props.character == 'Rikku' ? Rikku:
-        props.character == 'Kimahri' ? Kimahri: 
-        null} 
-      alt={props.character} 
-    />
+      {pictures}
     </div>
   );
 };

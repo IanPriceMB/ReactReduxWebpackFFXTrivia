@@ -26,6 +26,16 @@ import pubsub from 'pubsub-js';
 import levelData from '../../assets/data/levelData';
 
 
+// Load all the pictures that might be nessessary the character panels
+import Tidus from '../../assets/characters/Tidus.png';
+import Auron from '../../assets/characters/Auron.png';
+import Wakka from '../../assets/characters/Wakka.png';
+import Lulu from '../../assets/characters/Lulu.png';
+import Rikku from '../../assets/characters/Rikku.png';
+import Yuna from '../../assets/characters/Yuna.png';
+import Kimahri from '../../assets/characters/Kimahri.png';
+
+
 // All the components we need to build the page
 import CharacterPanel from '../../components/characterpanel/CharacterPanel';
 import OptionsMenu from '../../components/optionsMenu/OptionsMenu';
@@ -136,7 +146,31 @@ class CharacterSelectScreen extends Component{
 
   render() {
     const characters = this.props.available.map((character, i) => {
-      return <CharacterPanel character={character} key={i} updateChosen={this.updateChosen}/>
+      let image;
+      switch (character) {
+        case 'Tidus':
+          image = Tidus;
+          break;
+        case 'Auron':
+          image = Auron;
+          break;
+        case 'Rikku':
+          image = Rikku;
+          break;
+        case 'Kimahri':
+          image = Kimahri;
+          break;
+        case 'Wakka':
+          image = Wakka;
+          break;
+        case 'Lulu':
+          image = Lulu;
+          break;
+        case 'yuna':
+          image = Yuna;
+          break;
+      };
+      return <CharacterPanel character={character} key={i} updateChosen={this.updateChosen} image={image}/>
     });
     return (
       <Fragment>

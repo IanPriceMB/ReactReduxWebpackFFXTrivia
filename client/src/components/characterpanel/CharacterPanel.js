@@ -10,16 +10,6 @@ import PropTypes from 'prop-types';
 import characterData from '../../assets/data/characterData';
 
 
-// Load all the pictures that might be nessessary the character panels
-import Tidus from '../../assets/characters/Tidus.png';
-import Auron from '../../assets/characters/Auron.png';
-import Wakka from '../../assets/characters/Wakka.png';
-import Lulu from '../../assets/characters/Lulu.png';
-import Rikku from '../../assets/characters/Rikku.png';
-import Yuna from '../../assets/characters/Yuna.png';
-import Kimahri from '../../assets/characters/Kimahri.png';
-
-
 const CharacterPanel = props => {
   return (
     <div className='characterPanel' id={props.character} data-chosen={false} onClick={() => props.updateChosen(props.character)}>
@@ -27,17 +17,7 @@ const CharacterPanel = props => {
         <h1 className='name'>
           {characterData[props.character].name}
         </h1>
-        <img className='picture'
-          src={ 
-            props.character == 'Tidus' ? Tidus: 
-            props.character == 'Auron' ? Auron:
-            props.character == 'Wakka' ? Wakka:
-            props.character == 'Lulu' ? Lulu:
-            props.character == 'Yuna' ? Yuna:
-            props.character == 'Rikku' ? Rikku:
-            props.character == 'Kimahri' ? Kimahri: 
-            null} 
-            alt={props.character} />
+        <img className='picture' src={props.image}  alt={props.character} />
       </div>
       <div className='info'>
         <h2 className='subtitle'>
