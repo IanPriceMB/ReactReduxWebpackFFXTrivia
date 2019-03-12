@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import pubsub from 'pubsub-js'
 import { setLevel } from '../../actions/levelActions';
 import { setCutscene } from '../../actions/cutsceneActions';
-import { Button } from '../../components/Button/Button';
-import { Container } from '../../components/Container/Container';
+import { Button } from '../../components/button/Button';
+import { Container } from '../../components/container/Container';
 
 const MainMenuScreen = props => {
 

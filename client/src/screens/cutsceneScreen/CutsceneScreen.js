@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import levelData from '../../assets/data/levelData';
 import pubsub from 'pubsub-js';
-import {Button} from '../../components/Button/Button';
+import {Button} from '../../components/button/Button';
 
 class CutsceneScreen extends Component {
   constructor (props){

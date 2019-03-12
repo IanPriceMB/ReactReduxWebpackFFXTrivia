@@ -9,8 +9,8 @@ import CharacterPanel from '../../components/characterpanel/CharacterPanel';
 import {OptionsMenu} from '../../components/optionsMenu/OptionsMenu';
 import background from '../../assets/backgrounds/character_select.jpg';
 import pubsub from 'pubsub-js';
-import { Button } from '../../components/Button/Button';
-import { Container } from '../../components/Container/Container';
+import { Button } from '../../components/button/Button';
+import { Container } from '../../components/container/Container';
 
 class CharacterSelectScreen extends Component{
   constructor(props){

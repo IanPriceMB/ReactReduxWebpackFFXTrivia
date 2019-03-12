@@ -9,7 +9,8 @@ import levelData from '../../assets/data/levelData';
 import { HealthBar } from '../../components/healthBar/HealthBar';
 import pubsub from 'pubsub-js';
 import { OptionsMenu } from '../../components/optionsMenu/OptionsMenu';
-import { Container } from '../../components/Container/Container';
+import { Container } from '../../components/container/Container';
+import PartyOverlay from '../../components/partyOverlay/PartyOverlay';
 
 class GameScreen extends Component {
   constructor(props){
@@ -151,6 +152,7 @@ class GameScreen extends Component {
           <h3 className='question'>{this.state.currentQuestion.question}</h3>
           {answers}
         </Container>
+        <PartyOverlay></PartyOverlay>
       </Fragment>
     );
   };
