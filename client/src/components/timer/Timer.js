@@ -1,5 +1,12 @@
-import React, {Component} from 'react';
+// A timer for putting extra pressure on the player
+
+// Importing everything we need to make this a pretty react component
+import React, { Component } from 'react';
+
+// Connect for Redux state
 import { connect } from 'react-redux';
+
+
 class Timer extends Component {
   constructor(props){
     super(props)
@@ -13,8 +20,7 @@ class Timer extends Component {
     };
   };
 
-  // Check for any characters that effect timer state 
-  // Then enable their effects if so
+  // Enable any applicable character effects
   componentWillMount() {
     if(this.props.party.includes('Tidus')){
       this.setState({plusTime: this.state.plusTime + 5})
@@ -74,4 +80,6 @@ const mapStateToProps = state => ({
   party: state.characters.currentCharacters,
 })
 
+
+// Export the timer connected to Redux state
 export default connect(mapStateToProps, null)(Timer);

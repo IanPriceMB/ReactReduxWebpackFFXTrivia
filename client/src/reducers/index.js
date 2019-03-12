@@ -1,3 +1,5 @@
+// Combines all the different reducers into one
+
 import { combineReducers } from 'redux';
 import levelReducer from './levelReducer';
 import cutsceneReducer from './cutsceneReducer';

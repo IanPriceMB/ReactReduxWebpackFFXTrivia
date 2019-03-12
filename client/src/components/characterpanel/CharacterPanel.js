@@ -1,8 +1,16 @@
-// This file is for constructing each character panel for the character select Menu
+// Template for the character panel for the character select screen
 
+// Importing everything we need to make this a pretty react component
 import React from 'react';
 import './CharacterPanel.scss';
+
+
+//Data for the characters is located in a seperate file for clarity of reference
 import characterData from '../../assets/data/characterData';
+
+
+// Load all the pictures that might be nessessary for this file 
+// There is definately a better way of doing this
 import Tidus from '../../assets/characters/Tidus.png';
 import Auron from '../../assets/characters/Auron.png';
 import Wakka from '../../assets/characters/Wakka.png';
@@ -10,6 +18,7 @@ import Lulu from '../../assets/characters/Lulu.png';
 import Rikku from '../../assets/characters/Rikku.png';
 import Yuna from '../../assets/characters/Yuna.png';
 import Kimahri from '../../assets/characters/Kimahri.png';
+
 
 const CharacterPanel = props => {
   return (
@@ -47,5 +56,8 @@ const CharacterPanel = props => {
     </div>
   );
 };
+
+
+// Export the template
 export default CharacterPanel;
 

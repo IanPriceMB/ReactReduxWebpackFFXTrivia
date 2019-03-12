@@ -1,16 +1,34 @@
+// This file controls all the gameplay logic including: 
+// answer questions, the timer, which question to display
+// and losing
+
+// Importing everything we need to make this a pretty react component
 import React, { Component, Fragment } from 'react';
+import './GameScreen.scss';
 import PropTypes from 'prop-types';
+
+
+// For setting the background for the level
+import pubsub from 'pubsub-js';
+
+
+// For connecting to Redux State
 import { connect } from 'react-redux';
 import { setCutscene } from '../../actions/cutsceneActions';
 import { setLevel, gameLoss } from '../../actions/levelActions';
+
+
+// The data is placed else where for ease of reference
 import questionData from '../../assets/data/questionData';
-import Timer from '../../components/timer/Timer';
 import levelData from '../../assets/data/levelData';
-import { HealthBar } from '../../components/healthBar/HealthBar';
-import pubsub from 'pubsub-js';
-import { OptionsMenu } from '../../components/optionsMenu/OptionsMenu';
-import { Container } from '../../components/container/Container';
+
+
+// All the components needed to create the screen
+import HealthBar from '../../components/healthBar/HealthBar';
+import Timer from '../../components/timer/Timer';
+import Container from '../../components/container/Container';
 import PartyOverlay from '../../components/partyOverlay/PartyOverlay';
+
 
 class GameScreen extends Component {
   constructor(props){
@@ -28,6 +46,8 @@ class GameScreen extends Component {
     this.sceneChangeChecker = this.sceneChangeChecker.bind(this);
   };
 
+  // Before the component mounts we need to get the proper question data
+  // Also set the background image
   componentWillMount(){
     const path = `${this.props.level}_${this.props.scene}`;
     const currentSet = questionData[path];
@@ -36,6 +56,7 @@ class GameScreen extends Component {
     pubsub.publish('setBackground', 'data');
   };
 
+  //here we check what characters are in the party and assing click listeners to the answers
   componentDidMount() {
     this.auronCheck();
     this.assignListeners();
@@ -72,6 +93,7 @@ class GameScreen extends Component {
     }
   }
 
+  // Evaluate the players answer
   evaluateChoice = (e) => {
     const value = e.target.getAttribute('data-value');
     if (value == 'false') {
@@ -132,6 +154,7 @@ class GameScreen extends Component {
   };
 
   render(){
+
       const answers = this.state.answerSet.map((answer, i) => {
         return <div 
         key={i} 
@@ -140,9 +163,9 @@ class GameScreen extends Component {
         {answer.answer}
       </div>
       });
+
     return (
       <Fragment>
-        <OptionsMenu></OptionsMenu>
         <Container>
         <Timer 
             lifeLost={this.lifeLost} 
@@ -158,6 +181,8 @@ class GameScreen extends Component {
   };
 };
 
+
+// Declare the expected proptypes for this screen to run
 const mapStateToProps = state => ({
   available: state.characters.availableCharacters,
   current: state.characters.currentCharacters,
@@ -165,4 +190,6 @@ const mapStateToProps = state => ({
   scene: state.scene.sceneName
 });
 
+
+// Export the game screen connected to Redux State
 export default connect(mapStateToProps, { setCutscene, setLevel, gameLoss })(GameScreen);

@@ -1,3 +1,5 @@
+// This controls the Redux state with reguards to which scene we are in
+
 import { SET_CUTSCENE } from '../actions/types';
 
 const initialState = {

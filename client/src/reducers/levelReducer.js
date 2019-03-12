@@ -1,3 +1,6 @@
+// This controls the Redux state with reguars to
+// which level the player is on or if they have lost
+
 import { SET_LEVEL, GAME_LOSS } from '../actions/types';
 
 const initialState = {

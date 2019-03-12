@@ -1,14 +1,19 @@
-// This file contains the code for dynamically rendering and playing music
+// This file contains the code for dynamically playing music
 
+// Importing everything we need to make this a pretty react component
 import React, { Component } from 'react';
+
+
+// Pubsub is for listening to the events for playing, puasing and changing tracks
 import pubsub from 'pubsub-js';
-import music from '../../assets/music/MainMenu.mp3';
+
 
 class MusicPlayer extends Component {
   constructor(props){
-    super(props)
+    super(props);
   };
 
+  // Before the componenet mounts set up the pubsub listeners
   componentWillMount(){
     this.pubsub_play = pubsub.subscribe('playMusic', this.playMusic);
     this.pupsub_stop = pubsub.subscribe('pauseMusic', this.pauseMusic);
@@ -20,14 +25,14 @@ class MusicPlayer extends Component {
   playMusic = () => {
     document.querySelector('audio').play();
     document.querySelector('audio').volume = .1;
-  }
+  };
 
   pauseMusic = () => {
     document.querySelector('audio').pause();
     var mp = document.querySelector('audio');
     var src = mp.getElementsByTagName('source');
     src[0].setAttribute('src', '');
-  }
+  };
   
   changeTrack = async (music) => {
     try {
@@ -37,10 +42,10 @@ class MusicPlayer extends Component {
       this.playMusic();
     } catch (err) {
       console.log(err);
-    }
-     
-  }
+    };
+  };
 
+  // In case of unmount we unsubscribe to avoid memory leaks
   componentWillUnmount(){
     pubsub.unsubscribe(this.pubsub_play);
     pubsub.unsubscribe(this.pubsub_stop);
@@ -54,8 +59,10 @@ class MusicPlayer extends Component {
           <source id='music-source' src={music} type="audio/mpeg"/> 
         </audio>
       </div>
-    )    ;
+    );
   };
 };
 
+
+// Export the music player
 export default MusicPlayer;

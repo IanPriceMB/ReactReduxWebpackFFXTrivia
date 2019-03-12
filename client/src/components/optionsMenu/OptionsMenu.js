@@ -1,17 +1,22 @@
 // Renders and controls the options menu 
 
+// Importing everything we need to make this a pretty react component
 import React from 'react';
+import './OptionsMenu.scss';
 
-export const OptionsMenu = () => 
+const OptionsMenu = () => 
   {
     return(
     <div className='optionsMenu'>
       <ul>
-        <li>Save</li>
+        <li>Save & Exit</li>
         <li>Volume</li>
         <li>Credits</li>
-        <li>Exit Without Saving</li>
       </ul>
     </div>
-  )
-}
+  );
+};
+
+
+// Export the options menu
+export default OptionsMenu;
