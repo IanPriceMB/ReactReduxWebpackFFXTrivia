@@ -1,0 +1,33 @@
+$colors: (
+  mainMenu-Primary: rgba(0, 0, 178, 0.2),
+  mainMenu-Light: lighten(#0000b2, 40%),
+  mainMenu-Accent: white,
+  mainMenu-Button: rgba(120, 143, 20, 0.5),
+
+  zanarkandPrimary: red, 
+  zanarkandAccent: red, 
+  baajPrimary: red,
+  baajAccent: red
+);
+
+@function color($color-name) {
+  @return map-get($colors, $key: $color-name);
+}
+
+@mixin m425 {
+  @media (min-width: 425px) {
+    @content;
+  }
+}
+
+@mixin m425 {
+  @media (min-width: 425px) {
+    @content;
+  }
+}
+
+@mixin m425 {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}

@@ -1,32 +1,20 @@
 // This positions and styles the splash screen menu
-.splash {  
-  background-color: rgba(0, 0, 128, .7);
-  border: 1px solid black;
-  border-radius: 20px;
+@import '../../global.scss';
+
+.splash-container {  
   color: white;
-  padding: 20px;
-  text-align: center;
+  background-color: color(mainMenu-Primary);
+  border-color: color(mainMenu-Light);
 
-  &__title {
-    font-size: 3em;
-    margin: 0;
+  button {
+    background-color: color(mainMenu-Button);
+    border-color: color(mainMenu-Light);
+    color: color(mainMenu-Accent);
   }
 
-  &__subtitle {
-    font-size: 2em;
-  }
-
-  &__button {
-    background-color: black;
-    border: solid white;
-    border-radius: 20px;
-    color: white;
-    cursor: pointer;
-    font-size: 3em;
-    width: 80%;
-
-    &__text{
-      margin: 10px;
+  @include m425 {
+    h1{
+      margin: .67em 20px;
     }
   }
 }

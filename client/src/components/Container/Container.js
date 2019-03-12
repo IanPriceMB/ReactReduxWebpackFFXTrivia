@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 
 const Container = (props) => {
-  return <div className='container' {...props}>
+  return <div id='container' {...props}>
     {props.children}
   </div>
 };

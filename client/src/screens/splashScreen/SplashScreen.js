@@ -13,7 +13,6 @@ import pubsub from 'pubsub-js';
 // The components we need to make our screen
 import Button from '../../components/button/Button';
 import Container from '../../components/container/Container';
-import OptionsMenu from '../../components/optionsMenu/OptionsMenu';
 
 
 const SplashScreen = props => {
@@ -26,8 +25,7 @@ const SplashScreen = props => {
   // Rendering our component
   return (
     <Fragment>
-      <OptionsMenu></OptionsMenu>
-      <Container>
+      <Container className='splash-container'>
         <h1 className='title'>Final Fantasy X Trivia</h1>
         <h3 className='subtitle'>Created by Ian Price</h3>
         <Button onClick={() => props.changeScreen('MainMenuScreen')}>Blitz Off!</Button>

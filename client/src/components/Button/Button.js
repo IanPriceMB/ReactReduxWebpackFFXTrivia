@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 
 const Button = (props) => {
-  return <button className='button' {...props}>{props.children}</button>
+  return <button id='button' {...props}>{props.children}</button>
 };
 
 
