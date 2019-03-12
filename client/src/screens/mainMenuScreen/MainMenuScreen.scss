@@ -1,0 +1,20 @@
+@import '../../global.scss';
+
+.mainMenu-container{
+
+  color: white;
+  background-color: color(mainMenu-Primary);
+  border-color: color(mainMenu-Light);
+
+  button {
+    background-color: color(mainMenu-Button);
+    border-color: color(mainMenu-Light);
+    color: color(mainMenu-Accent);
+  }
+
+  @include m425 {
+    h1{
+      margin: .67em 20px;
+    }
+  }
+}

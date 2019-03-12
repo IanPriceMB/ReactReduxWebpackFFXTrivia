@@ -27,7 +27,8 @@ const MainMenuScreen = props => {
   };
 
   return (
-    <Container>
+    <Container className='mainMenu-container'>
+      <h1>Listen to My Story...</h1>
       <Button onClick={newGame}>New Game</Button>
       <Button>Log In</Button>
       <Button>Sign UP</Button>

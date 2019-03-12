@@ -20,14 +20,14 @@ $colors: (
   }
 }
 
-@mixin m425 {
-  @media (min-width: 425px) {
-    @content;
-  }
-}
+// @mixin m425 {
+//   @media (min-width: 425px) {
+//     @content;
+//   }
+// }
 
-@mixin m425 {
-  @media (min-width: 1024px) {
-    @content;
-  }
-}
+// @mixin m425 {
+//   @media (min-width: 1024px) {
+//     @content;
+//   }
+// }
