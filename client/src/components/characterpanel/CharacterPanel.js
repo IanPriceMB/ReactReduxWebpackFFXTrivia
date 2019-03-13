@@ -13,26 +13,23 @@ import characterData from '../../assets/data/characterData';
 const CharacterPanel = props => {
   return (
     <div className='characterPanel' id={props.character} data-chosen={false} onClick={() => props.updateChosen(props.character)}>
-      <div className='media'>
-        <h1 className='name'>
-          {characterData[props.character].name}
-        </h1>
-        <img className='picture' src={props.image}  alt={props.character} />
-      </div>
-      <div className='info'>
-        <h2 className='subtitle'>
-          {characterData[props.character].strength.name}
-        </h2>
-        <p className='discription'>
-          {characterData[props.character].strength.discription}
-        </p>
-        <h2 className='subtitle'>
-          {characterData[props.character].weakness.name}
-        </h2>
-        <p className='discription'>
-          {characterData[props.character].weakness.discription}
-        </p>
-      </div>
+      <h1 className='character'>
+        {characterData[props.character].name}
+      </h1>
+      <img className='image' src={props.image}  alt={props.character} />
+      <h2 className='abilities'>Abilities: </h2>
+      <h3 className='subtitle strength'>
+        {characterData[props.character].strength.name}
+      </h3>
+      <p className='discription str-discription'>
+        {characterData[props.character].strength.discription}
+      </p>
+      <h3 className='subtitle weakness'>
+        {characterData[props.character].weakness.name}
+      </h3>
+      <p className='discription weak-discription'>
+        {characterData[props.character].weakness.discription}
+      </p>
     </div>
   );
 };

@@ -1,50 +1,44 @@
 // This file contains the style for the Character Panel
 
 .characterPanel{
-  background-color: navy;
-  border: 3px solid rgb(0, 0, 202);
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  flex-basis: 30%;
-  flex-grow: 1;
-  height: 40%;
-  margin: 1.5%;
-  
-  &:hover{
-    border: 3px solid aqua;
+  display:       grid;
+  justify-items: end;
+  align-items:   center;
+  grid-template-rows: 20% 10% 30% 10% 30%;
+  grid-template-columns: 35% 65%;
+  grid-template-areas: 
+    "character abilities"
+    "image     strength"
+    "image     str-discription"
+    "image     weakness"
+    "image     weak-discription";
+
+  .character{
+    grid-area: character;
+    justify-self: center;
   }
-
-  &__media{
-      width: 30%;
-      margin: 1.5%;
-
-    &__name{
-      text-align: center;
-      margin: 0;
-    }
-  
-    &__picture{
-      display: block;
-      width: 100%;
-    }
+  .image {
+    grid-area: image;
+    justify-self: center;
   }
-
-  &__info{
-    width: 70%;
-    margin: 1.5%;
-
-    &__subtitle{
-      text-align: center;
-      margin: 0;
-    }
-
-    &__discription{
-      font-size: 1em;
-      color: gold;
-    }
+  .abilities{
+    grid-area: abilities;
+    justify-self: center;
   }
-
-
+  .strength{
+    grid-area: strength;
+  }
+  .str-discription{
+    grid-area: str-discription
+  }
+  .weakness{
+    grid-area: weakness
+  }
+  .weak-discription{
+    grid-area: weak-discription
+  }
+  .discription, .subtitle {
+    text-align: end;
+  }
 }
+

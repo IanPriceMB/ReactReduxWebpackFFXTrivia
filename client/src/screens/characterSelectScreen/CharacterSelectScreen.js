@@ -84,6 +84,7 @@ class CharacterSelectScreen extends Component{
 
   componentDidMount(){
     pubsub.publish('playMusic');
+    pubsub.publish('setBackground');
   };
 
 
@@ -116,11 +117,11 @@ class CharacterSelectScreen extends Component{
     if(this.state.chosen.length <= 0){
       this.setState({
         proceed: 
-        <div className='pickACharacter'>
+        <div className='pickACharacter container'>
           You must pick at least one character
-          <button onClick={() => this.setState({proceed: null})}>
+          <Button onClick={() => this.setState({proceed: null})}>
             OK
-          </button>
+          </Button>
         </div>
       });
     } else {
@@ -160,11 +161,10 @@ class CharacterSelectScreen extends Component{
     return (
       <Fragment>
         {this.state.proceed != null ? this.state.proceed: null}
-        <OptionsMenu></OptionsMenu>
-          <h1 className='title'>
-            Chose Up to 3 Characters ({this.state.chosen.length})
-          </h1>
-          <Container>
+          <Container className="css-container">
+            <h1 className='title'>
+              Chose Up to 3 Characters ({this.state.chosen.length})
+            </h1>
             {characters}
             <Button onClick={this.startGame}>Let's Go!</Button>
           </Container>
